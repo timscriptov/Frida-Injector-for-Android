@@ -3,28 +3,58 @@
 
     <androidx.preference.PreferenceCategory
         android:layout="@layout/preference_category"
-        android:title="Appearance">
+        android:title="@string/pref_appearance">
 
         <androidx.preference.SwitchPreference
             android:defaultValue="false"
             android:key="fullscreen_mode"
-            android:title="Fullscreen mode" />
+            android:title="@string/pref_fullscreen_mode" />
 
         <androidx.preference.SwitchPreference
             android:defaultValue="false"
             android:key="night_mode"
-            android:title="Night mode" />
+            android:title="@string/pref_night_mode" />
 
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory
         android:layout="@layout/preference_category"
-        android:title="Editor">
+        android:title="@string/pref_editor">
 
         <androidx.preference.SwitchPreference
             android:defaultValue="false"
             android:key="wordwrap"
-            android:title="Wordwrap" />
+            android:title="@string/pref_wordwrap" />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        android:layout="@layout/preference_category"
+        android:title="@string/pref_community">
+
+        <androidx.preference.Preference
+            android:key="github_disc"
+            android:title="GitHub">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/TimScriptov/Frida-Injector-for-Android" />
+        </androidx.preference.Preference>
+
+        <androidx.preference.Preference
+            android:key="telegram_disc"
+            android:title="Telegram">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://t.me/frida_injector_pe" />
+        </androidx.preference.Preference>
+
+        <androidx.preference.Preference
+            android:key="4pda_disc"
+            android:title="4PDA">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://4pda.ru/forum/index.php?showtopic=998591" />
+        </androidx.preference.Preference>
 
     </androidx.preference.PreferenceCategory>
 

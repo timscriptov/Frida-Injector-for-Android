@@ -3,29 +3,29 @@
 
     <item
         android:id="@+id/action_undo"
-        android:title="Undo"
+        android:title="@string/menu_undo"
         android:icon="@drawable/ic_undo_selector"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/action_redo"
-        android:title="Redo"
+        android:title="@string/menu_redo"
         android:icon="@drawable/ic_redo_selector"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/action_gotoline"
-        android:title="Jump to line"
+        android:title="@string/menu_jump_to_line"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_settings"
-        android:title="Settings"
+        android:title="@string/menu_settings"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_about"
-        android:title="About"
+        android:title="@string/menu_about"
         app:showAsAction="never" />
 
 </menu>

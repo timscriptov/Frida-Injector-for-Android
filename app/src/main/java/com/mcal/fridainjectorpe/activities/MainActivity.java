@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements OnMessage {
         setContentView(R.layout.activity_main);
         setupToolbar(getString(R.string.app_name));
         mEditor = findViewById(R.id.edit_code);
-        mEditor.setText("// Your code");
+        mEditor.setText(getString(R.string.your_code));
         mEditor.requestFocus();
         apkPackage = findViewById(R.id.app_package);
         scriptPath = findViewById(R.id.script_path);
@@ -111,11 +111,11 @@ public class MainActivity extends BaseActivity implements OnMessage {
                 ll.setLayoutParams(layoutParams);
                 final AppCompatEditText acet0 = new AppCompatEditText(this);
                 acet0.setText("");
-                acet0.setHint("Enter number line");
+                acet0.setHint(R.string.enter_number_line);
                 ll.addView(acet0);
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-                dialog.setTitle("Jump to line");
+                dialog.setTitle(R.string.jump_to_line);
                 dialog.setView(ll);
                 dialog.setPositiveButton("Ok", (dialog1, which) -> {
                     if (!acet0.getText().toString().isEmpty()) {
@@ -131,9 +131,9 @@ public class MainActivity extends BaseActivity implements OnMessage {
                 break;
             case R.id.action_about:
                 AlertDialog.Builder dialogAbout = new AlertDialog.Builder(MainActivity.this);
-                dialogAbout.setTitle("About");
+                dialogAbout.setTitle(R.string.dialog_about_title);
                 dialogAbout.setMessage("Frida Injector - Pocket Edition " + BuildConfig.VERSION_NAME + "\n\nCopyright 2020 Иван Тимашков");
-                dialogAbout.setPositiveButton("Ok", null);
+                dialogAbout.setPositiveButton(android.R.string.ok, null);
                 dialogAbout.show();
                 break;
         }
@@ -191,9 +191,9 @@ public class MainActivity extends BaseActivity implements OnMessage {
         properties.root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
         properties.extensions = new String[]{".js", ".JS"};
         FilePickerDialog dialog = new FilePickerDialog(MainActivity.this, properties, R.style.AlertDialogTheme);
-        dialog.setTitle("Select script");
-        dialog.setPositiveBtnName("Select");
-        dialog.setNegativeBtnName("Cancel");
+        dialog.setTitle(getString(R.string.select_script));
+        dialog.setPositiveBtnName(getString(R.string.select));
+        dialog.setNegativeBtnName(getString(android.R.string.cancel));
         dialog.setDialogSelectionListener(files -> {
             for (String path : files) {
                 File file = new File(path);

@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1.0"
-                    android:hint="Package name"
+                    android:hint="@string/package_name"
                     app:errorEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -59,7 +59,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/browseapk"
                     app:srcCompat="@drawable/ic_android"
-                    android:text="Open"
+                    android:text="@string/open_apk"
                     android:id="@+id/select" />
 
             </LinearLayout>
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1.0"
-                    android:hint="Script path"
+                    android:hint="@string/script_path"
                     app:errorEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -94,7 +94,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/browseapk"
                     app:srcCompat="@drawable/ic_folder_open"
-                    android:text="Open"
+                    android:text="@string/open_script"
                     android:id="@+id/open_script" />
 
             </LinearLayout>
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Run"
+                android:text="@string/run"
                 android:id="@+id/run" />
 
         </LinearLayout>

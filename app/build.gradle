@@ -34,7 +34,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'com.google.android.material:material:1.1.0'
 
-	implementation 'com.chrisplus.rootmanager:library:2.0.5@aar'
+    implementation 'com.chrisplus.rootmanager:library:2.0.5@aar'
 
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
     implementation 'io.github.inflationx:viewpump:2.0.2'

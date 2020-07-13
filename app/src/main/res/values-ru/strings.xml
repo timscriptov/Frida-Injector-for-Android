@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Frida Injector - Pocket Edition</string>
+    <string name="action_open">open</string>
+    <string name="action_settings">setting</string>
+    <string name="action_gotoline">gotoline</string>
+
+    <string name="pref_appearance">Внешний вид</string>
+    <string name="pref_fullscreen_mode">Полноэкранный режим</string>
+    <string name="pref_night_mode">Тёмная тема</string>
+    <string name="pref_editor">Редактор</string>
+    <string name="pref_wordwrap">Перенос строк</string>
+    <string name="pref_community">Сообщество</string>
+
+    <string name="menu_jump_to_line">Перейти к строке</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_about">О приложении</string>
+    <string name="menu_undo">Отменить</string>
+    <string name="menu_redo">Вернуть</string>
+
+    <string name="package_name">Имя пакета</string>
+    <string name="open_apk">Выбрать приложение</string>
+    <string name="script_path">Путь к скрипту</string>
+    <string name="open_script">Открыть скрипт</string>
+    <string name="run">Запустить</string>
+
+    <string name="your_code">// Твой код</string>
+    <string name="enter_number_line">Введите номер строки</string>
+    <string name="jump_to_line">Перейти к строке</string>
+    <string name="dialog_about_title">О приложении</string>
+    <string name="select_script">Выберите скрипт</string>
+    <string name="select">Выбрать</string>
+
+</resources>
