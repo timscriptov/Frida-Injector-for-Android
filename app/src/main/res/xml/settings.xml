@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.preference.PreferenceCategory
+        android:layout="@layout/preference_category"
+        android:title="Appearance">
+
+        <androidx.preference.SwitchPreference
+            android:defaultValue="false"
+            android:key="fullscreen_mode"
+            android:title="Fullscreen mode" />
+
+        <androidx.preference.SwitchPreference
+            android:defaultValue="false"
+            android:key="night_mode"
+            android:title="Night mode" />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        android:layout="@layout/preference_category"
+        android:title="Editor">
+
+        <androidx.preference.SwitchPreference
+            android:defaultValue="false"
+            android:key="wordwrap"
+            android:title="Wordwrap" />
+
+    </androidx.preference.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Frida Injector - Pocket Edition</string>
+    <string name="action_open">open</string>
+    <string name="action_settings">setting</string>
+    <string name="action_gotoline">gotoline</string>
+
+</resources>
