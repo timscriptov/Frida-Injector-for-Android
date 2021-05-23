@@ -23,10 +23,6 @@ import android.content.SharedPreferences;
 
 import androidx.preference.PreferenceManager;
 
-import io.github.inflationx.calligraphy3.CalligraphyConfig;
-import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
-import io.github.inflationx.viewpump.ViewPump;
-
 public class App extends Application {
     @SuppressLint("StaticFieldLeak")
     public static Context context;
@@ -42,13 +38,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        ViewPump.init(ViewPump.builder()
-                .addInterceptor(new CalligraphyInterceptor(
-                        new CalligraphyConfig.Builder()
-                                .setDefaultFontPath("fonts/Lato.ttf")
-                                .setFontAttrId(R.attr.fontPath)
-                                .build()))
-                .build());
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 }

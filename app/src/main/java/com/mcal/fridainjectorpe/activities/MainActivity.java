@@ -40,11 +40,13 @@ import com.mcal.filepicker.model.DialogProperties;
 import com.mcal.filepicker.view.FilePickerDialog;
 import com.mcal.fridainjectorpe.BuildConfig;
 import com.mcal.fridainjectorpe.R;
+import com.mcal.fridainjectorpe.data.Preferences;
 import com.mcal.fridainjectorpe.editor.TextEditor;
 import com.mcal.fridainjectorpe.injector.FridaAgent;
 import com.mcal.fridainjectorpe.injector.FridaInjector;
 import com.mcal.fridainjectorpe.injector.OnMessage;
 import com.mcal.fridainjectorpe.model.BaseActivity;
+import com.mcal.fridainjectorpe.utils.ExceptionHandler;
 import com.mcal.fridainjectorpe.view.AppListDialog;
 import com.mcal.fridainjectorpe.view.CenteredToolBar;
 
@@ -69,11 +71,11 @@ public class MainActivity extends BaseActivity implements OnMessage {
     public AppCompatButton run;
     @SuppressLint("StaticFieldLeak")
     public static AppCompatImageView apkIcon;
-    private static SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_main);
         setupToolbar(getString(R.string.app_name));
         mEditor = findViewById(R.id.edit_code);
@@ -132,7 +134,7 @@ public class MainActivity extends BaseActivity implements OnMessage {
             case R.id.action_about:
                 AlertDialog.Builder dialogAbout = new AlertDialog.Builder(MainActivity.this);
                 dialogAbout.setTitle(R.string.dialog_about_title);
-                dialogAbout.setMessage("Frida Injector - Pocket Edition " + BuildConfig.VERSION_NAME + "\n\nCopyright 2020 Иван Тимашков");
+                dialogAbout.setMessage("Frida Injector - Pocket Edition " + BuildConfig.VERSION_NAME + "\n\nCopyright 2020-2021 Иван Тимашков");
                 dialogAbout.setPositiveButton(android.R.string.ok, null);
                 dialogAbout.show();
                 break;
@@ -141,8 +143,6 @@ public class MainActivity extends BaseActivity implements OnMessage {
     }
 
     public void init() {
-        sp = PreferenceManager.getDefaultSharedPreferences(this);
-
         selectApk.setOnClickListener(v -> {
             new AppListDialog(MainActivity.this, apkPackage);
         });
@@ -152,10 +152,10 @@ public class MainActivity extends BaseActivity implements OnMessage {
                 // build an instance of FridaInjector providing binaries for arm/arm64/x86/x86_64 as needed
                 // assets/frida-inject-12.10.4-android-arm64
                 FridaInjector fridaInjector = new FridaInjector.Builder(MainActivity.this)
-                        .withArmInjector("frida-inject-12.10.4-android-arm")
-                        .withArm64Injector("frida-inject-12.10.4-android-arm64")
-                        .withX86Injector("frida-inject-12.10.4-android-x86")
-                        .withX86_64Injector("frida-inject-12.10.4-android-x86_64")
+                        .withArmInjector("frida-inject-14.2.18-android-arm")
+                        .withArm64Injector("frida-inject-14.2.18-android-arm64")
+                        .withX86Injector("frida-inject-14.2.18-android-x86")
+                        .withX86_64Injector("frida-inject-14.2.18-android-x86_64")
                         .build();
 
                 // build an instance of FridaAgent
@@ -168,7 +168,7 @@ public class MainActivity extends BaseActivity implements OnMessage {
                 fridaAgent.registerInterface("activityInterface", Interfaces.ActivityInterface.class);
 
                 // inject app
-                fridaInjector.inject(fridaAgent, sp.getString("apk_package_name", ""), true);
+                fridaInjector.inject(fridaAgent, Preferences.packageName(), true);
             } catch (IOException e) {
                 e.printStackTrace();
             }

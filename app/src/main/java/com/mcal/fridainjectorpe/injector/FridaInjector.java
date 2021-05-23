@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 import com.chrisplus.rootmanager.RootManager;
+import com.mcal.fridainjectorpe.utils.Utils;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

@@ -28,6 +28,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 
 import com.mcal.fridainjectorpe.R;
 import com.mcal.fridainjectorpe.async.ApplicationLoader;
+import com.mcal.fridainjectorpe.data.Preferences;
 import com.mcal.fridainjectorpe.data.dto.applist.AppInteractor;
 import com.mcal.fridainjectorpe.data.dto.applist.PackageInfoHolder;
 import com.mcal.fridainjectorpe.data.dto.applist.ViewHolder;
@@ -88,6 +89,7 @@ public class AppListDialog implements AppInteractor {
         adb.setAdapter(aa, (p1, p2) -> {
             PackageInfoHolder pkg = aa.getItem(p2);
             mEdit.setText(pkg.packageName);
+            Preferences.packageName(pkg.packageName);
             adx.dismiss();
         });
         adb.create();

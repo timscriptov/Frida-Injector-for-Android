@@ -23,7 +23,7 @@ import com.mcal.fridainjectorpe.injector.FridaInterface;
 import java.util.Arrays;
 
 public class Interfaces {
-    static final class ActivityInterface implements FridaInterface {
+    public static final class ActivityInterface implements FridaInterface {
         @Override
         public Object call(Object[] args) {
             Log.e("FridaAndroidInject", Arrays.toString(args));

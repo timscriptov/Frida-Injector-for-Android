@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 'android-S'
 
     defaultConfig {
         //applicationId "com.mcal.filepicker"
         minSdkVersion 14
-        targetSdkVersion 29
+        //noinspection ExpiredTargetSdkVersion
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -20,7 +21,7 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-    buildToolsVersion = '30.0.0'
+    buildToolsVersion = '30.0.3'
 }
 
 dependencies {

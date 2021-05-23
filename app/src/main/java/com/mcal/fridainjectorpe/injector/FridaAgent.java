@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 
+import com.mcal.fridainjectorpe.utils.Utils;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

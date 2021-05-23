@@ -29,6 +29,10 @@ public final class Preferences {
         preferences.edit().putString("apk_path", path).apply();
     }
 
+    public static String packageName() {
+        return preferences.getString("apk_package_name", "");
+    }
+
     public static void packageName(String pkg) {
         preferences.edit().putString("apk_package_name", pkg).apply();
     }
