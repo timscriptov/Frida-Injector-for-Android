@@ -22,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 
 public class TextEditor extends TextEditorField {
-
-    private Context mContext;
     private boolean isWordWrap = false;
     private int mCaretIndex = 0;
     @SuppressLint("SdCardPath")
@@ -45,10 +43,9 @@ public class TextEditor extends TextEditorField {
     }
 
     private void init(@NotNull Context context) {
-        mContext = context;
         initFont(fontDir);
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
-        float size = TypedValue.applyDimension(2, BASE_TEXT_SIZE_PIXELS, dm);
+        @SuppressLint("WrongConstant") float size = TypedValue.applyDimension(2, BASE_TEXT_SIZE_PIXELS, dm);
         setTextSize((int) size);
         setShowLineNumbers(true);
         setHighlightCurrentRow(true);
