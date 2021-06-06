@@ -12,6 +12,11 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
+    <style name="TextInputLayoutTheme" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="hintTextColor">@color/colorAccent</item>
+    </style>
+
     <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
         <item name="android:windowBackground">@drawable/bottom_sheet_background</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>

@@ -45,6 +45,7 @@
                     app:errorEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/TextInputLayoutTheme"
                         android:id="@+id/app_package"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
@@ -80,6 +81,7 @@
                     app:errorEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        style="@style/TextInputLayoutTheme"
                         android:id="@+id/script_path"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
