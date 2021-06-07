@@ -1,5 +1,6 @@
 package com.mcal.fridainjectorpe.editor.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -28,9 +29,9 @@ import java.util.ArrayList;
 
 public class AutoCompletePanel {
 
+    private static Language _globalLanguage = LanguageNonProg.getInstance();
     private FreeScrollingTextField _textField;
     private Context _context;
-    private static Language _globalLanguage = LanguageNonProg.getInstance();
     private ListPopupWindow _autoCompletePanel;
     private AutoCompletePanel.MyAdapter _adapter;
     private Filter _filter;
@@ -55,12 +56,24 @@ public class AutoCompletePanel {
         initAutoCompletePanel();
     }
 
+    @Contract(pure = true)
+    synchronized public static Language getLanguage() {
+        return _globalLanguage;
+    }
+
+    synchronized public static void setLanguage(Language lang) {
+        _globalLanguage = lang;
+    }
+
+    synchronized public static void updateLanguage() {
+        _globalLanguage = Lexer.getLanguage();
+    }
+
     public void setTextColor(int color) {
         _textColor = color;
         gd.setStroke(1, color);
         _autoCompletePanel.setBackgroundDrawable(gd);
     }
-
 
     public void setBackgroundColor(int color) {
         _backgroundColor = color;
@@ -121,7 +134,6 @@ public class AutoCompletePanel {
         }
     }
 
-
     private void setVerticalOffset(int verticalOffset) {
         //verticalOffset=Math.min(verticalOffset,_textField.getWidth()/2);
         int max = 0 - _autoCompletePanel.getHeight();
@@ -152,19 +164,6 @@ public class AutoCompletePanel {
         }
     }
 
-    synchronized public static void setLanguage(Language lang) {
-        _globalLanguage = lang;
-    }
-
-    @Contract(pure = true)
-    synchronized public static Language getLanguage() {
-        return _globalLanguage;
-    }
-
-    synchronized public static void updateLanguage() {
-        _globalLanguage = Lexer.getLanguage();
-    }
-
     /**
      * Adapter定义
      */
@@ -188,6 +187,7 @@ public class AutoCompletePanel {
         }
 
 
+        @SuppressLint("WrongConstant")
         private int dp(float n) {
             // TODO: Implement this method
             return (int) TypedValue.applyDimension(1, n, dm);
@@ -196,17 +196,16 @@ public class AutoCompletePanel {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // TODO: Implement this method
-            AppCompatTextView view = (AppCompatTextView) super.getView(position, convertView, parent);
-			/*AppCompatTextView view=null;
-			if(convertView==null){
-				 view=new AppCompatTextView(_context);
-				 view.setTextSize(16);
-				 view.setPadding(dp(8),dp(3),dp(8),dp(3));
-			}
-			else{
-				view=(AppCompatTextView) convertView;
-			}
-			view.setText(getItem(position));*/
+            //AppCompatTextView view = (AppCompatTextView) super.getView(position, convertView, parent);
+            AppCompatTextView view = null;
+            if (convertView == null) {
+                view = new AppCompatTextView(_context);
+                view.setTextSize(16);
+                view.setPadding(dp(8), dp(3), dp(8), dp(3));
+            } else {
+                view = (AppCompatTextView) convertView;
+            }
+            view.setText(getItem(position));
             view.setTextColor(_textColor);
             return view;
         }
@@ -240,15 +239,15 @@ public class AutoCompletePanel {
                  */
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
-					/*int l=constraint.length();
-					 int i=l;
-					 for(;i>0;i--){
-					 if(constraint.charAt(l-1)=='.')
-					 break;
-					 }
-					 if(i>0){
-					 constraint=constraint.subSequence(i,l);
-					 }*/
+                    int l = constraint.length();
+                    int i = l;
+                    for (; i > 0; i--) {
+                        if (constraint.charAt(l - 1) == '.')
+                            break;
+                    }
+                    if (i > 0) {
+                        constraint = constraint.subSequence(i, l);
+                    }
 
                     // 此处实现过滤
                     // 过滤后利用FilterResults将过滤结果返回

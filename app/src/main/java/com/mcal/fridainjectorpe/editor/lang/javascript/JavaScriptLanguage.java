@@ -1,10 +1,10 @@
 package com.mcal.fridainjectorpe.editor.lang.javascript;
 
 import com.mcal.fridainjectorpe.editor.lang.Language;
+import com.mcal.fridainjectorpe.editor.lang.lua.LuaFormatter;
+import com.mcal.fridainjectorpe.editor.lang.lua.LuaTokenizer;
 
 public class JavaScriptLanguage extends Language {
-    private static JavaScriptLanguage _theOne = null;
-
     private final static String[] keywords = {
             "abstract", "boolean", "break", "byte", "case", "catch", "char",
             "class", "const", "continue", "debugger", "default", "delete", "do",
@@ -17,6 +17,20 @@ public class JavaScriptLanguage extends Language {
             "volatile", "while", "with"
     };
 
+    private final static char[] JAVASCRIPT_OPERATORS = {
+            '(', ')', '{', '}', ',', ';', '=', '+', '-',
+            '/', '*', '&', '!', '|', ':', '[', ']', '<', '>',
+            '?', '~', '%', '^'
+    };
+
+    private static JavaScriptLanguage _theOne = null;
+
+    private JavaScriptLanguage() {
+        super.setOperators(JAVASCRIPT_OPERATORS);
+        super.setKeywords(keywords);
+        super.setNames(keywords);
+    }
+
     public static JavaScriptLanguage getInstance() {
         if (_theOne == null) {
             _theOne = new JavaScriptLanguage();
@@ -24,8 +38,14 @@ public class JavaScriptLanguage extends Language {
         return _theOne;
     }
 
-    private JavaScriptLanguage() {
-        super.setKeywords(keywords);
+    @Override
+    public LuaTokenizer getTokenizer() {
+        return LuaTokenizer.getInstance();
+    }
+
+    @Override
+    public LuaFormatter getFormatter() {
+        return LuaFormatter.getInstance();
     }
 
     public boolean isLineAStart(char c) {

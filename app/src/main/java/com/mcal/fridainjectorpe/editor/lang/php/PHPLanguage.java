@@ -3,8 +3,6 @@ package com.mcal.fridainjectorpe.editor.lang.php;
 import com.mcal.fridainjectorpe.editor.lang.Language;
 
 public class PHPLanguage extends Language {
-    private static PHPLanguage _theOne = null;
-
     private final static String[] keywords = {
             "abstract", "and", "array", "as", "break", "case", "catch", "class",
             "clone", "const", "continue", "declare", "default", "do", "else",
@@ -17,24 +15,24 @@ public class PHPLanguage extends Language {
             "isset", "list", "require", "require_once", "return", "print", "unset",
             "self", "static", "parent", "true", "TRUE", "false", "FALSE", "null", "NULL"
     };
-
     private final static char[] operators = {
             '(', ')', '{', '}', '.', ',', ';', '=', '+', '-',
             '/', '*', '&', '!', '|', ':', '[', ']', '<', '>',
             '?', '~', '%', '^', '`', '@'
     };
+    private static PHPLanguage _theOne = null;
 
+
+    private PHPLanguage() {
+        super.setKeywords(keywords);
+        super.setOperators(operators);
+    }
 
     public static PHPLanguage getInstance() {
         if (_theOne == null) {
             _theOne = new PHPLanguage();
         }
         return _theOne;
-    }
-
-    private PHPLanguage() {
-        super.setKeywords(keywords);
-        super.setOperators(operators);
     }
 
     @Override

@@ -135,8 +135,82 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
      *
      * Copied from android.text.method.QwertyKeyListener, dated 2006
      */
+    /*
+     * Hash map for determining which characters to let the user choose from when
+     * a hardware key is long-pressed. For example, long-pressing "e" displays
+     * choices of "é, è, ê, ë" and so on.
+     * This is biased towards European locales, but is standard Android behavior
+     * for TextView.
+     *
+     * Copied from android.text.method.QwertyKeyListener, dated 2006
+     */
+    private static SparseArray<String> PICKER_SETS = new SparseArray<String>();
 
-    private Scroller mScroller;
+    static {
+        PICKER_SETS.put('A', "\u00C0\u00C1\u00C2\u00C4\u00C6\u00C3\u00C5\u0104\u0100");
+        PICKER_SETS.put('C', "\u00C7\u0106\u010C");
+        PICKER_SETS.put('D', "\u010E");
+        PICKER_SETS.put('E', "\u00C8\u00C9\u00CA\u00CB\u0118\u011A\u0112");
+        PICKER_SETS.put('G', "\u011E");
+        PICKER_SETS.put('L', "\u0141");
+        PICKER_SETS.put('I', "\u00CC\u00CD\u00CE\u00CF\u012A\u0130");
+        PICKER_SETS.put('N', "\u00D1\u0143\u0147");
+        PICKER_SETS.put('O', "\u00D8\u0152\u00D5\u00D2\u00D3\u00D4\u00D6\u014C");
+        PICKER_SETS.put('R', "\u0158");
+        PICKER_SETS.put('S', "\u015A\u0160\u015E");
+        PICKER_SETS.put('T', "\u0164");
+        PICKER_SETS.put('U', "\u00D9\u00DA\u00DB\u00DC\u016E\u016A");
+        PICKER_SETS.put('Y', "\u00DD\u0178");
+        PICKER_SETS.put('Z', "\u0179\u017B\u017D");
+        PICKER_SETS.put('a', "\u00E0\u00E1\u00E2\u00E4\u00E6\u00E3\u00E5\u0105\u0101");
+        PICKER_SETS.put('c', "\u00E7\u0107\u010D");
+        PICKER_SETS.put('d', "\u010F");
+        PICKER_SETS.put('e', "\u00E8\u00E9\u00EA\u00EB\u0119\u011B\u0113");
+        PICKER_SETS.put('g', "\u011F");
+        PICKER_SETS.put('i', "\u00EC\u00ED\u00EE\u00EF\u012B\u0131");
+        PICKER_SETS.put('l', "\u0142");
+        PICKER_SETS.put('n', "\u00F1\u0144\u0148");
+        PICKER_SETS.put('o', "\u00F8\u0153\u00F5\u00F2\u00F3\u00F4\u00F6\u014D");
+        PICKER_SETS.put('r', "\u0159");
+        PICKER_SETS.put('s', "\u00A7\u00DF\u015B\u0161\u015F");
+        PICKER_SETS.put('t', "\u0165");
+        PICKER_SETS.put('u', "\u00F9\u00FA\u00FB\u00FC\u016F\u016B");
+        PICKER_SETS.put('y', "\u00FD\u00FF");
+        PICKER_SETS.put('z', "\u017A\u017C\u017E");
+        PICKER_SETS.put(KeyCharacterMap.PICKER_DIALOG_INPUT,
+                "\u2026\u00A5\u2022\u00AE\u00A9\u00B1[]{}\\|");
+        PICKER_SETS.put('/', "\\");
+
+        // From packages/inputmethods/LatinIME/res/xml/kbd_symbols.xml
+
+        PICKER_SETS.put('1', "\u00b9\u00bd\u2153\u00bc\u215b");
+        PICKER_SETS.put('2', "\u00b2\u2154");
+        PICKER_SETS.put('3', "\u00b3\u00be\u215c");
+        PICKER_SETS.put('4', "\u2074");
+        PICKER_SETS.put('5', "\u215d");
+        PICKER_SETS.put('7', "\u215e");
+        PICKER_SETS.put('0', "\u207f\u2205");
+        PICKER_SETS.put('$', "\u00a2\u00a3\u20ac\u00a5\u20a3\u20a4\u20b1");
+        PICKER_SETS.put('%', "\u2030");
+        PICKER_SETS.put('*', "\u2020\u2021");
+        PICKER_SETS.put('-', "\u2013\u2014");
+        PICKER_SETS.put('+', "\u00b1");
+        PICKER_SETS.put('(', "[{<");
+        PICKER_SETS.put(')', "]}>");
+        PICKER_SETS.put('!', "\u00a1");
+        PICKER_SETS.put('"', "\u201c\u201d\u00ab\u00bb\u02dd");
+        PICKER_SETS.put('?', "\u00bf");
+        PICKER_SETS.put(',', "\u201a\u201e");
+
+        // From packages/inputmethods/LatinIME/res/xml/kbd_symbols_shift.xml
+
+        PICKER_SETS.put('=', "\u2260\u2248\u221e");
+        PICKER_SETS.put('<', "\u2264\u00ab\u2039");
+        PICKER_SETS.put('>', "\u2265\u00bb\u203a");
+    }
+
+    //光标宽度
+    public final int mCursorWidth = 5;
     protected boolean isEdited = false; // whether the text field is dirtied
     protected TouchNavigationMethod mNavMethod;
     protected DocumentProvider hDoc; // the model in MVC
@@ -152,6 +226,7 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
     protected boolean isLongPressCaps = false;
     protected AutoCompletePanel mAutoCompletePanel;
     protected boolean isAutoComplete = true;
+    private Scroller mScroller;
     private TextFieldController mFieldController; // the controller in MVC
     private TextFieldInputConnection mInputConnection;
     private OnTextChangeListener mTextListener;
@@ -175,23 +250,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
     private boolean isLayout = false;
     private boolean isTextChanged = false;
     private boolean isCaretScrolled = false;
-    private ClipboardPanel mClipboardPanel;
-    private ClipboardManager mClipboardManager;
-    private float mZoomFactor = 1;
-    private int mCaretX, mCaretY;
-    private char mCharEmoji = '\0';
-    //光标宽度
-    public final int mCursorWidth = 5;
-    private Pair mCaretSpan = new Pair(0, 0);
-    private Typeface defTypeface = Typeface.DEFAULT;
-    private Typeface boldTypeface = Typeface.DEFAULT_BOLD;
-    private Typeface italicTypeface = Typeface.create(Typeface.DEFAULT, Typeface.ITALIC);
-
-
-    public void setCaretListener(OnCaretScrollListener caretScrollListener) {
-        mCaretListener = caretScrollListener;
-    }
-
     private final Runnable mScrollCaretDownTask = new Runnable() {
         @Override
         public void run() {
@@ -201,7 +259,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
             }
         }
     };
-
     private final Runnable mScrollCaretUpTask = new Runnable() {
         @Override
         public void run() {
@@ -211,7 +268,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
             }
         }
     };
-
     private final Runnable mScrollCaretLeftTask = new Runnable() {
         @Override
         public void run() {
@@ -222,7 +278,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
             }
         }
     };
-
     private final Runnable mScrollCaretRightTask = new Runnable() {
         @Override
         public void run() {
@@ -233,8 +288,15 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
             }
         }
     };
-
-
+    private ClipboardPanel mClipboardPanel;
+    private ClipboardManager mClipboardManager;
+    private float mZoomFactor = 1;
+    private int mCaretX, mCaretY;
+    private char mCharEmoji = '\0';
+    private Pair mCaretSpan = new Pair(0, 0);
+    private Typeface defTypeface = Typeface.DEFAULT;
+    private Typeface boldTypeface = Typeface.DEFAULT_BOLD;
+    private Typeface italicTypeface = Typeface.create(Typeface.DEFAULT, Typeface.ITALIC);
     // Cursor blink animation
     private Runnable cursorAnimation = new Runnable() {
 
@@ -251,17 +313,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         }
     };
 
-    public void startBlink() {
-        removeCallbacks(cursorAnimation);
-        postDelayed(cursorAnimation, 1000);
-    }
-
-    public void stopBlink() {
-        removeCallbacks(cursorAnimation);
-        isCursorVisiable = true;
-    }
-
-
     /**
      * Like {@link View#scrollBy}, but scroll smoothly instead of immediately.
      *
@@ -275,6 +326,7 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         initTextField(context);
     }
 
+
     public FreeScrollingTextField(Context context, AttributeSet attrs) {
         super(context, attrs);
         initTextField(context);
@@ -285,6 +337,20 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         initTextField(context);
     }
 
+    public void setCaretListener(OnCaretScrollListener caretScrollListener) {
+        mCaretListener = caretScrollListener;
+    }
+
+    public void startBlink() {
+        removeCallbacks(cursorAnimation);
+        postDelayed(cursorAnimation, 1000);
+    }
+
+    public void stopBlink() {
+        removeCallbacks(cursorAnimation);
+        isCursorVisiable = true;
+    }
+
     protected void initTextField(Context context) {
         hDoc = new DocumentProvider(this);
         mNavMethod = new TouchNavigationMethod(this);
@@ -292,7 +358,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
 
         initView(context);
     }
-
 
     public int getTopOffset() {
         return mTopOffset;
@@ -331,12 +396,12 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         isCaretScrolled = scrolled;
     }
 
-    public void setTextChanged(boolean changed) {
-        isTextChanged = changed;
-    }
-
     public boolean getTextChanged() {
         return isTextChanged;
+    }
+
+    public void setTextChanged(boolean changed) {
+        isTextChanged = changed;
     }
 
     public int getLeftOffset() {
@@ -346,7 +411,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
     public float getTextSize() {
         return mTextPaint.getTextSize();
     }
-
 
     public void setTextSize(int pix) {
         if (pix <= 20 || pix >= 80 || pix == mTextPaint.getTextSize()) {
@@ -485,7 +549,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         invalidate();
     }
 
-
     private void resetView() {
         mCaretPosition = mCaretRow = 0;
         xExtent = mLineMaxWidth = 0;
@@ -534,6 +597,9 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         mNavMethod = navMethod;
     }
 
+    //---------------------------------------------------------------------
+    //-------------------------- Paint methods ----------------------------
+
     public void setChirality(boolean isRightHanded) {
         mNavMethod.onChiralityChanged(isRightHanded);
     }
@@ -542,9 +608,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
     public boolean isEdited() {
         return isEdited;
     }
-
-    //---------------------------------------------------------------------
-    //-------------------------- Paint methods ----------------------------
 
     public void setEdited(boolean set) {
         isEdited = set;
@@ -688,7 +751,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         canvas.restore();
         mNavMethod.onTextDrawComplete(canvas);
     }
-
 
     private void realDraw(Canvas canvas) {
         //----------------------------------------------
@@ -921,7 +983,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         }
     }
 
-
     /**
      * Underline the caret row if the option for highlighting it is set
      * 高亮当前行
@@ -1087,6 +1148,9 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         return advance;
     }
 
+    //---------------------------------------------------------------------
+    //------------------- Scrolling and touch -----------------------------
+
     public int getCharAdvance(char c) {
         int advance;
         char[] ca = {c};
@@ -1102,9 +1166,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
             return mSpaceWidth;
         }
     }
-
-    //---------------------------------------------------------------------
-    //------------------- Scrolling and touch -----------------------------
 
     protected int getEOLAdvance() {
         if (isShowNonPrinting) {
@@ -1189,7 +1250,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         invalidateRows(startRow, endRow + 1);
     }
 
-
     /**
      * Scrolls the text horizontally and/or vertically if the character
      * specified by charOffset is not in the visible text region.
@@ -1213,7 +1273,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
             return true;
         }
     }
-
 
     /**
      * Calculates the amount to scroll vertically if the char is not
@@ -1586,6 +1645,10 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         smoothScrollBy(x - getScrollX(), y - getScrollY());
     }
 
+
+    //---------------------------------------------------------------------
+    //------------------------- Caret methods -----------------------------
+
     /**
      * Start fling scrolling
      */
@@ -1602,10 +1665,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
     public boolean isFlingScrolling() {
         return !mScroller.isFinished();
     }
-
-
-    //---------------------------------------------------------------------
-    //------------------------- Caret methods -----------------------------
 
     public void stopFlingScrolling() {
         mScroller.forceFinished(true);
@@ -1740,6 +1799,10 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         mFieldController.moveCaretDown();
     }
 
+
+    //---------------------------------------------------------------------
+    //------------------------- Text Selection ----------------------------
+
     /**
      * Sets the caret one row up, scrolls it on screen, and invalidates the
      * necessary areas for redrawing.
@@ -1756,10 +1819,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
     public void focusCaret() {
         makeCharVisible(mCaretPosition);
     }
-
-
-    //---------------------------------------------------------------------
-    //------------------------- Text Selection ----------------------------
 
     /**
      * @return The column number where charOffset appears on
@@ -1848,6 +1907,9 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         mFieldController.focusSelection(false);
     }
 
+    //---------------------------------------------------------------------
+    //------------------------- Formatting methods ------------------------
+
     public void cut() {
         if (mSelectionAnchor != mSelectionEdge)
             mFieldController.cut(mClipboardManager);
@@ -1858,9 +1920,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
             mFieldController.copy(mClipboardManager);
         selectText(false);
     }
-
-    //---------------------------------------------------------------------
-    //------------------------- Formatting methods ------------------------
 
     public void paste() {
         CharSequence text = mClipboardManager.getText();
@@ -1989,7 +2048,6 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         isAutoComplete = enable;
     }
 
-
     /**
      * Enable/disable long-pressing capitalization.
      * When enabled, a long-press on a hardware key capitalizes that letter.
@@ -2103,7 +2161,7 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
         }
         // remove cursor blink callback
         stopBlink();
-        // restart blink 
+        // restart blink
         startBlink();
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_RIGHT:
@@ -3326,79 +3384,4 @@ public abstract class FreeScrollingTextField extends View implements Document.Te
             return true;
         }
     }// end inner class
-
-
-    /*
-     * Hash map for determining which characters to let the user choose from when
-     * a hardware key is long-pressed. For example, long-pressing "e" displays
-     * choices of "é, è, ê, ë" and so on.
-     * This is biased towards European locales, but is standard Android behavior
-     * for TextView.
-     *
-     * Copied from android.text.method.QwertyKeyListener, dated 2006
-     */
-    private static SparseArray<String> PICKER_SETS = new SparseArray<String>();
-
-    static {
-        PICKER_SETS.put('A', "\u00C0\u00C1\u00C2\u00C4\u00C6\u00C3\u00C5\u0104\u0100");
-        PICKER_SETS.put('C', "\u00C7\u0106\u010C");
-        PICKER_SETS.put('D', "\u010E");
-        PICKER_SETS.put('E', "\u00C8\u00C9\u00CA\u00CB\u0118\u011A\u0112");
-        PICKER_SETS.put('G', "\u011E");
-        PICKER_SETS.put('L', "\u0141");
-        PICKER_SETS.put('I', "\u00CC\u00CD\u00CE\u00CF\u012A\u0130");
-        PICKER_SETS.put('N', "\u00D1\u0143\u0147");
-        PICKER_SETS.put('O', "\u00D8\u0152\u00D5\u00D2\u00D3\u00D4\u00D6\u014C");
-        PICKER_SETS.put('R', "\u0158");
-        PICKER_SETS.put('S', "\u015A\u0160\u015E");
-        PICKER_SETS.put('T', "\u0164");
-        PICKER_SETS.put('U', "\u00D9\u00DA\u00DB\u00DC\u016E\u016A");
-        PICKER_SETS.put('Y', "\u00DD\u0178");
-        PICKER_SETS.put('Z', "\u0179\u017B\u017D");
-        PICKER_SETS.put('a', "\u00E0\u00E1\u00E2\u00E4\u00E6\u00E3\u00E5\u0105\u0101");
-        PICKER_SETS.put('c', "\u00E7\u0107\u010D");
-        PICKER_SETS.put('d', "\u010F");
-        PICKER_SETS.put('e', "\u00E8\u00E9\u00EA\u00EB\u0119\u011B\u0113");
-        PICKER_SETS.put('g', "\u011F");
-        PICKER_SETS.put('i', "\u00EC\u00ED\u00EE\u00EF\u012B\u0131");
-        PICKER_SETS.put('l', "\u0142");
-        PICKER_SETS.put('n', "\u00F1\u0144\u0148");
-        PICKER_SETS.put('o', "\u00F8\u0153\u00F5\u00F2\u00F3\u00F4\u00F6\u014D");
-        PICKER_SETS.put('r', "\u0159");
-        PICKER_SETS.put('s', "\u00A7\u00DF\u015B\u0161\u015F");
-        PICKER_SETS.put('t', "\u0165");
-        PICKER_SETS.put('u', "\u00F9\u00FA\u00FB\u00FC\u016F\u016B");
-        PICKER_SETS.put('y', "\u00FD\u00FF");
-        PICKER_SETS.put('z', "\u017A\u017C\u017E");
-        PICKER_SETS.put(KeyCharacterMap.PICKER_DIALOG_INPUT,
-                "\u2026\u00A5\u2022\u00AE\u00A9\u00B1[]{}\\|");
-        PICKER_SETS.put('/', "\\");
-
-        // From packages/inputmethods/LatinIME/res/xml/kbd_symbols.xml
-
-        PICKER_SETS.put('1', "\u00b9\u00bd\u2153\u00bc\u215b");
-        PICKER_SETS.put('2', "\u00b2\u2154");
-        PICKER_SETS.put('3', "\u00b3\u00be\u215c");
-        PICKER_SETS.put('4', "\u2074");
-        PICKER_SETS.put('5', "\u215d");
-        PICKER_SETS.put('7', "\u215e");
-        PICKER_SETS.put('0', "\u207f\u2205");
-        PICKER_SETS.put('$', "\u00a2\u00a3\u20ac\u00a5\u20a3\u20a4\u20b1");
-        PICKER_SETS.put('%', "\u2030");
-        PICKER_SETS.put('*', "\u2020\u2021");
-        PICKER_SETS.put('-', "\u2013\u2014");
-        PICKER_SETS.put('+', "\u00b1");
-        PICKER_SETS.put('(', "[{<");
-        PICKER_SETS.put(')', "]}>");
-        PICKER_SETS.put('!', "\u00a1");
-        PICKER_SETS.put('"', "\u201c\u201d\u00ab\u00bb\u02dd");
-        PICKER_SETS.put('?', "\u00bf");
-        PICKER_SETS.put(',', "\u201a\u201e");
-
-        // From packages/inputmethods/LatinIME/res/xml/kbd_symbols_shift.xml
-
-        PICKER_SETS.put('=', "\u2260\u2248\u221e");
-        PICKER_SETS.put('<', "\u2264\u00ab\u2039");
-        PICKER_SETS.put('>', "\u2265\u00bb\u203a");
-    }
 }

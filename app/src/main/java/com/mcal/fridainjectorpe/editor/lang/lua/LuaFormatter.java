@@ -14,6 +14,14 @@ public class LuaFormatter extends DefFormatter {
         return _theOne;
     }
 
+    private static char[] createIndent(int n) {
+        if (n < 0)
+            return new char[0];
+        char[] idts = new char[n];
+        for (int i = 0; i < n; i++)
+            idts[i] = indentChar;
+        return idts;
+    }
 
     @Override
     public int createAutoIndent(CharSequence text) {
@@ -50,7 +58,6 @@ public class LuaFormatter extends DefFormatter {
                 return 0;
         }
     }
-
 
     private int indent(LuaType t) {
         switch (t) {
@@ -137,15 +144,6 @@ public class LuaFormatter extends DefFormatter {
         }
 
         return builder;
-    }
-
-    private static char[] createIndent(int n) {
-        if (n < 0)
-            return new char[0];
-        char[] idts = new char[n];
-        for (int i = 0; i < n; i++)
-            idts[i] = indentChar;
-        return idts;
     }
 
 

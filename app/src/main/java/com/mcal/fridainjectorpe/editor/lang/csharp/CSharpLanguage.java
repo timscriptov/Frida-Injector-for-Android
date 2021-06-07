@@ -3,8 +3,6 @@ package com.mcal.fridainjectorpe.editor.lang.csharp;
 import com.mcal.fridainjectorpe.editor.lang.Language;
 
 public class CSharpLanguage extends Language {
-    private static CSharpLanguage _theOne = null;
-
     private final static String[] keywords = {
             "abstract", "as", "base", "bool", "break", "byte", "case", "catch",
             "char", "checked", "class", "const", "continue", "decimal", "default",
@@ -22,16 +20,17 @@ public class CSharpLanguage extends Language {
             "from", "where", "join", "on", "equals", "into", "let", "orderby",
             "ascending", "descending", "select", "group", "by"
     };
+    private static CSharpLanguage _theOne = null;
+
+    private CSharpLanguage() {
+        super.setKeywords(keywords);
+    }
 
     public static CSharpLanguage getInstance() {
         if (_theOne == null) {
             _theOne = new CSharpLanguage();
         }
         return _theOne;
-    }
-
-    private CSharpLanguage() {
-        super.setKeywords(keywords);
     }
 
 }

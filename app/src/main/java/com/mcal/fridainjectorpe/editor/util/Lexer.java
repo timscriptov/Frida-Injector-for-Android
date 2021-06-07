@@ -61,6 +61,7 @@ public class Lexer {
     public final static int SINGLE_SYMBOL_DELIMITED_A = 50;
     public final static int SINGLE_SYMBOL_DELIMITED_B = 51;
     public final static int MAX_KEYWORD_LENGTH = 127;
+    public static ArrayList<Rect> mLines = new ArrayList<>();
     private static Language mGlobalLanguage = LanguageNonProg.getInstance();
     LexCallback mCallback = null;
     private DocumentProvider hDoc;
@@ -81,9 +82,6 @@ public class Lexer {
     public static DefFormatter getFormatter() {
         return mGlobalLanguage.getFormatter();
     }
-
-    public static ArrayList<Rect> mLines = new ArrayList<>();
-
 
     public void tokenize(DocumentProvider hDoc) {
         //tokenize will modify the state of hDoc; make a copy

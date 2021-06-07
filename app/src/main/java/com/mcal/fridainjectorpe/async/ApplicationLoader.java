@@ -20,9 +20,9 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ApplicationLoader extends AsyncTask<String, String, ArrayList<PackageInfoHolder>> {
-    private ProgressDialog packageLoadDialog;
-    AppInteractor interactor;
     public WeakReference<Context> context;
+    AppInteractor interactor;
+    private ProgressDialog packageLoadDialog;
 
     public ApplicationLoader(Context context, AppInteractor interactor) {
         this.context = new WeakReference<>(context);

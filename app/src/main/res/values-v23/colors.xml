@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg">#FFF8F8F8</color>
     <color name="cardView">#FFFFFFFF</color>
     <color name="colorAccent">#FF448aff</color>
     <color name="colorPrimary">#FF448aff</color>
     <color name="colorPrimaryDark">#FFF</color>
-    <color name="colorCheckBox">#FFFFFFFF</color>
-
-    <color name="colorButtonNormal">#FF448aff</color>
-    <color name="colorControlHighlight">#FF448aff</color>
-
-    <color name="dialog_app_info">#FF000000</color>
-    <color name="dialog_app_info_msg">#FF868686</color>
-    <color name="dialog_style">#FFF8F8F8</color>
 
     <color name="textColorPrimary">#FF000000</color>
     <color name="textColorSecondary">#FF000000</color>

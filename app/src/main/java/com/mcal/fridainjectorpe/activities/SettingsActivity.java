@@ -19,6 +19,8 @@ package com.mcal.fridainjectorpe.activities;
 import android.os.Bundle;
 
 import com.mcal.fridainjectorpe.R;
+import com.mcal.fridainjectorpe.databinding.ActivitySettingsBinding;
+import com.mcal.fridainjectorpe.databinding.DialogGotoBinding;
 import com.mcal.fridainjectorpe.fragment.SettingsFragment;
 import com.mcal.fridainjectorpe.model.BaseActivity;
 
@@ -27,14 +29,15 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        ActivitySettingsBinding settingsBinding = ActivitySettingsBinding.inflate(getLayoutInflater());
+        setContentView(settingsBinding.getRoot());
 
-        setSupportActionBar(findViewById(R.id.toolbar));
+        setSupportActionBar(settingsBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.frame_container, new SettingsFragment())
+                .add(settingsBinding.frameContainer.getId(), new SettingsFragment())
                 .commit();
     }
 }

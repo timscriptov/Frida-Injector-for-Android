@@ -3,8 +3,6 @@ package com.mcal.fridainjectorpe.editor.lang.objectivec;
 import com.mcal.fridainjectorpe.editor.lang.Language;
 
 public class ObjectiveCLanguage extends Language {
-    private static ObjectiveCLanguage _theOne = null;
-
     private final static String[] keywords = {
             "char", "double", "float", "int", "long", "short", "void",
             "auto", "const", "extern", "register", "static", "volatile",
@@ -20,16 +18,17 @@ public class ObjectiveCLanguage extends Language {
             "in", "out", "inout", "bycopy", "byref", "oneway",
             "getter", "setter", "readwrite", "readonly", "assign", "retain", "copy", "nonatomic"
     };
+    private static ObjectiveCLanguage _theOne = null;
+
+    private ObjectiveCLanguage() {
+        super.setKeywords(keywords);
+    }
 
     public static ObjectiveCLanguage getInstance() {
         if (_theOne == null) {
             _theOne = new ObjectiveCLanguage();
         }
         return _theOne;
-    }
-
-    private ObjectiveCLanguage() {
-        super.setKeywords(keywords);
     }
 
 }

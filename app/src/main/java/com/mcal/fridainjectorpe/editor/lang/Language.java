@@ -31,7 +31,22 @@ public abstract class Language {
 
     //关键字
     protected HashMap<String, Integer> _keywords = new HashMap<>(0);
+    //自带函数方法
+    protected HashMap<String, Integer> _names = new HashMap<>(0);
+    //包(os,table)，类(File)
+    protected HashMap<String, String[]> _bases = new HashMap<String, String[]>(0);
+    //用户函数，方法
+    protected HashMap<String, Integer> _users = new HashMap<>(0);
+    //符号
+    protected HashMap<Character, Integer> _operators = generateOperators(BASIC_C_OPERATORS);
     private String[] _keyword;
+    private String[] _name;
+    private String[] _userWords = new String[0];
+    private ArrayList<String> _ueserCache = new ArrayList<>();
+
+    public String[] getKeywords() {
+        return _keyword;
+    }
 
     public void setKeywords(@NotNull String[] keywords) {
         _keyword = keywords;
@@ -39,10 +54,6 @@ public abstract class Language {
         for (int i = 0; i < keywords.length; ++i) {
             _keywords.put(keywords[i], Lexer.KEYWORD);
         }
-    }
-
-    public String[] getKeywords() {
-        return _keyword;
     }
 
     @Contract(pure = true)
@@ -60,9 +71,9 @@ public abstract class Language {
         return DefFormatter.getInstance();
     }
 
-    //自带函数方法
-    protected HashMap<String, Integer> _names = new HashMap<>(0);
-    private String[] _name;
+    public String[] getNames() {
+        return _name;
+    }
 
     public void setNames(@NotNull String[] names) {
         _name = names;
@@ -77,18 +88,10 @@ public abstract class Language {
         buf.toArray(_name);
     }
 
-    public String[] getNames() {
-        return _name;
-    }
-
     @Contract(pure = true)
     public final boolean isName(String s) {
         return _names.containsKey(s);
     }
-
-
-    //包(os,table)，类(File)
-    protected HashMap<String, String[]> _bases = new HashMap<String, String[]>(0);
 
     public void addBasePackage(String name, String[] names) {
         _bases.put(name, names);
@@ -111,12 +114,6 @@ public abstract class Language {
         }
         return false;
     }
-
-
-    //用户函数，方法
-    protected HashMap<String, Integer> _users = new HashMap<>(0);
-    private String[] _userWords = new String[0];
-    private ArrayList<String> _ueserCache = new ArrayList<>();
 
     public void addUserWord(String name) {
         if (!_ueserCache.contains(name) && !_names.containsKey(name))
@@ -142,10 +139,6 @@ public abstract class Language {
     public final boolean isUserWord(String s) {
         return _users.containsKey(s);
     }
-
-
-    //符号
-    protected HashMap<Character, Integer> _operators = generateOperators(BASIC_C_OPERATORS);
 
     protected void setOperators(char[] operators) {
         _operators = generateOperators(operators);

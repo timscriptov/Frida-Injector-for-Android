@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="theme">
-        <item>Auto</item>
-        <item>Day</item>
-        <item>Night</item>
-    </string-array>
-
-    <string-array name="theme_values">
-        <item>auto</item>
-        <item>day</item>
-        <item>night</item>
-    </string-array>
-
 </resources>

@@ -28,6 +28,47 @@ public class FridaInjector {
         mInjector = builder.getInjector();
     }
 
+    @NotNull
+    private static File extractInjectorIfNeeded(@NotNull Context context, String name) throws IOException {
+        File injectorPath = new File(context.getFilesDir(), "injector");
+        File injector = new File(injectorPath, name);
+
+        if (!injectorPath.exists()) {
+            injectorPath.mkdir();
+        } else {
+            File[] files = injectorPath.listFiles();
+            if (files != null && files.length > 0) {
+                if (files[0].getName().equals(name)) {
+                    return injector;
+                }
+                files[0].delete();
+            }
+        }
+
+        Utils.extractAsset(context, name, injector);
+        RootManager.getInstance().runCommand("chmod 777 " + injector.getPath());
+        return injector;
+    }
+
+    @NotNull
+    private static String getArch() {
+        for (String androidArch : Build.SUPPORTED_ABIS) {
+            switch (androidArch) {
+                case "arm64-v8a":
+                    return "arm64";
+                case "armeabi-v7a":
+                    return "arm";
+                case "x86_64":
+                    return "x86_64";
+                case "x86":
+                    return "x86";
+            }
+        }
+
+        throw new RuntimeException("Unable to determine arch from Build.SUPPORTED_ABIS =  " +
+                Arrays.toString(Build.SUPPORTED_ABIS));
+    }
+
     public void inject(FridaAgent fridaAgent, final String packageName, boolean spawn) {
         if (mInjector == null) {
             throw new RuntimeException("did you forget to call init()?");
@@ -200,46 +241,5 @@ public class FridaInjector {
         private File getInjector() {
             return mInjector;
         }
-    }
-
-    @NotNull
-    private static File extractInjectorIfNeeded(@NotNull Context context, String name) throws IOException {
-        File injectorPath = new File(context.getFilesDir(), "injector");
-        File injector = new File(injectorPath, name);
-
-        if (!injectorPath.exists()) {
-            injectorPath.mkdir();
-        } else {
-            File[] files = injectorPath.listFiles();
-            if (files != null && files.length > 0) {
-                if (files[0].getName().equals(name)) {
-                    return injector;
-                }
-                files[0].delete();
-            }
-        }
-
-        Utils.extractAsset(context, name, injector);
-        RootManager.getInstance().runCommand("chmod 777 " + injector.getPath());
-        return injector;
-    }
-
-    @NotNull
-    private static String getArch() {
-        for (String androidArch : Build.SUPPORTED_ABIS) {
-            switch (androidArch) {
-                case "arm64-v8a":
-                    return "arm64";
-                case "armeabi-v7a":
-                    return "arm";
-                case "x86_64":
-                    return "x86_64";
-                case "x86":
-                    return "x86";
-            }
-        }
-
-        throw new RuntimeException("Unable to determine arch from Build.SUPPORTED_ABIS =  " +
-                Arrays.toString(Build.SUPPORTED_ABIS));
     }
 }

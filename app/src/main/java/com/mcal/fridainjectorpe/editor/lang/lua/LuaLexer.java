@@ -91,12 +91,6 @@ public class LuaLexer {
      * This character denotes the end of file
      */
     public static final int YYEOF = -1;
-
-    /**
-     * initial size of the lookahead buffer
-     */
-    private static final int ZZ_BUFFERSIZE = 16384;
-
     /**
      * lexical states
      */
@@ -107,7 +101,10 @@ public class LuaLexer {
     public static final int xBLOCK_STRING = 8;
     public static final int xCOMMENT = 10;
     public static final int xBLOCK_COMMENT = 12;
-
+    /**
+     * initial size of the lookahead buffer
+     */
+    private static final int ZZ_BUFFERSIZE = 16384;
     /**
      * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
      * ZZ_LEXSTATE[l+1] is the state in the DFA for the lexical state l
@@ -271,12 +268,6 @@ public class LuaLexer {
      * Translates characters to character classes
      */
     private static final char[] ZZ_CMAP = zzUnpackCMap(ZZ_CMAP_PACKED);
-
-    /**
-     * Translates DFA states to action switch labels.
-     */
-    private static final int[] ZZ_ACTION = zzUnpackAction();
-
     private static final String ZZ_ACTION_PACKED_0 =
             "\1\0\1\1\5\0\1\2\2\3\1\4\1\5\1\6" +
                     "\1\7\1\6\1\10\1\11\7\5\1\12\1\13\1\14" +
@@ -295,32 +286,10 @@ public class LuaLexer {
                     "\1\5\1\107\1\5\1\110\1\0\1\6\2\0\1\111" +
                     "\1\112\1\113\1\5\1\114\2\5\3\0\1\115\2\5" +
                     "\1\116\1\0\1\117\1\120\1\116\2\0\2\121";
-
-    private static int[] zzUnpackAction() {
-        int[] result = new int[215];
-        int offset = 0;
-        offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
-        return result;
-    }
-
-    private static int zzUnpackAction(String packed, int offset, int[] result) {
-        int i = 0;       /* index in packed string  */
-        int j = offset;  /* index in unpacked array */
-        int l = packed.length();
-        while (i < l) {
-            int count = packed.charAt(i++);
-            int value = packed.charAt(i++);
-            do result[j++] = value; while (--count > 0);
-        }
-        return j;
-    }
-
-
     /**
-     * Translates a state to a row index in the transition table
+     * Translates DFA states to action switch labels.
      */
-    private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
-
+    private static final int[] ZZ_ACTION = zzUnpackAction();
     private static final String ZZ_ROWMAP_PACKED_0 =
             "\0\0\0\75\0\172\0\267\0\364\0\u0131\0\u016e\0\u01ab" +
                     "\0\u01e8\0\u01ab\0\u0225\0\u0262\0\u029f\0\u01ab\0\u02dc\0\u0319" +
@@ -349,30 +318,10 @@ public class LuaLexer {
                     "\0\u2068\0\u0262\0\u0262\0\u0262\0\u20a5\0\u0262\0\u20e2\0\u211f" +
                     "\0\u215c\0\u2199\0\u21d6\0\u0262\0\u2213\0\u2250\0\u228d\0\u22ca" +
                     "\0\u0262\0\u0262\0\u2307\0\u2344\0\u2381\0\u23be\0\u23fb";
-
-    private static int[] zzUnpackRowMap() {
-        int[] result = new int[215];
-        int offset = 0;
-        offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
-        return result;
-    }
-
-    private static int zzUnpackRowMap(String packed, int offset, int[] result) {
-        int i = 0;  /* index in packed string  */
-        int j = offset;  /* index in unpacked array */
-        int l = packed.length();
-        while (i < l) {
-            int high = packed.charAt(i++) << 16;
-            result[j++] = high | packed.charAt(i++);
-        }
-        return j;
-    }
-
     /**
-     * The transition table of the DFA
+     * Translates a state to a row index in the transition table
      */
-    private static final int[] ZZ_TRANS = zzUnpackTrans();
-
+    private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
     private static final String ZZ_TRANS_PACKED_0 =
             "\1\10\1\11\1\12\1\13\1\14\1\10\1\15\2\14" +
                     "\1\16\1\14\1\17\1\14\1\20\1\21\1\22\1\23" +
@@ -537,6 +486,150 @@ public class LuaLexer {
                     "\1\322\5\14\6\0\1\14\1\0\14\14\26\0\1\323" +
                     "\113\0\1\324\52\0\1\323\2\0\72\323\23\0\1\325" +
                     "\75\0\1\326\53\0\1\327\71\0\1\327\2\0\72\327";
+    /**
+     * The transition table of the DFA
+     */
+    private static final int[] ZZ_TRANS = zzUnpackTrans();
+    /* error codes */
+    private static final int ZZ_UNKNOWN_ERROR = 0;
+    private static final int ZZ_NO_MATCH = 1;
+    private static final int ZZ_PUSHBACK_2BIG = 2;
+    /* error messages for the codes above */
+    private static final String ZZ_ERROR_MSG[] = {
+            "Unknown internal scanner error",
+            "Error: could not match input",
+            "Error: pushback value was too large"
+    };
+    private static final String ZZ_ATTRIBUTE_PACKED_0 =
+            "\1\0\1\1\5\0\1\11\1\1\1\11\3\1\1\11" +
+                    "\14\1\2\11\1\1\1\11\16\1\2\11\1\1\6\11" +
+                    "\1\1\1\11\2\1\1\11\3\1\1\0\1\11\3\1" +
+                    "\1\0\16\1\1\11\1\0\1\11\2\0\15\1\13\11" +
+                    "\4\0\1\1\2\0\2\1\1\11\2\0\10\1\2\11" +
+                    "\15\1\1\0\2\1\1\0\1\1\4\0\21\1\2\0" +
+                    "\2\1\2\0\14\1\1\0\1\1\2\0\7\1\3\0" +
+                    "\4\1\1\0\3\1\2\0\2\1";
+    /**
+     * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
+     */
+    private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
+    /**
+     * the input device
+     */
+    private java.io.Reader zzReader;
+    /**
+     * the current state of the DFA
+     */
+    private int zzState;
+    /**
+     * the current lexical state
+     */
+    private int zzLexicalState = YYINITIAL;
+    /**
+     * this buffer contains the current text to be matched and is
+     * the source of the yytext() string
+     */
+    private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
+    /**
+     * the textposition at the last accepting state
+     */
+    private int zzMarkedPos;
+    /**
+     * the current text position in the buffer
+     */
+    private int zzCurrentPos;
+    /**
+     * startRead marks the beginning of the yytext() string in the buffer
+     */
+    private int zzStartRead;
+    /**
+     * endRead marks the last character in the buffer, that has been read
+     * from input
+     */
+    private int zzEndRead;
+    /**
+     * number of newlines encountered up to the start of the matched text
+     */
+    private int yyline;
+    /**
+     * the number of characters up to the start of the matched text
+     */
+    private int yychar;
+    /**
+     * the number of characters from the last newline up to the start of the
+     * matched text
+     */
+    private int yycolumn;
+    /**
+     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
+     */
+    private boolean zzAtBOL = true;
+    /**
+     * zzAtEOF == true <=> the scanner is at the EOF
+     */
+    private boolean zzAtEOF;
+    /**
+     * denotes if the user-EOF-code has already been executed
+     */
+    private boolean zzEOFDone;
+    /**
+     * The number of occupied positions in zzBuffer beyond zzEndRead.
+     * When a lead/high surrogate has been read from the input stream
+     * into the final zzBuffer position, this will have a value of 1;
+     * otherwise, it will have a value of 0.
+     */
+    private int zzFinalHighSurrogate = 0;
+    private int nBrackets = 0;
+
+    public LuaLexer(CharSequence src) {
+        this(new CharSeqReader(src));
+    }
+
+    /**
+     * Creates a new scanner
+     *
+     * @param in the java.io.Reader to read input from.
+     */
+    public LuaLexer(java.io.Reader in) {
+        this.zzReader = in;
+    }
+
+    private static int[] zzUnpackAction() {
+        int[] result = new int[215];
+        int offset = 0;
+        offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
+        return result;
+    }
+
+    private static int zzUnpackAction(String packed, int offset, int[] result) {
+        int i = 0;       /* index in packed string  */
+        int j = offset;  /* index in unpacked array */
+        int l = packed.length();
+        while (i < l) {
+            int count = packed.charAt(i++);
+            int value = packed.charAt(i++);
+            do result[j++] = value; while (--count > 0);
+        }
+        return j;
+    }
+
+    private static int[] zzUnpackRowMap() {
+        int[] result = new int[215];
+        int offset = 0;
+        offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
+        return result;
+    }
+
+    private static int zzUnpackRowMap(String packed, int offset, int[] result) {
+        int i = 0;  /* index in packed string  */
+        int j = offset;  /* index in unpacked array */
+        int l = packed.length();
+        while (i < l) {
+            int high = packed.charAt(i++) << 16;
+            result[j++] = high | packed.charAt(i++);
+        }
+        return j;
+    }
 
     private static int[] zzUnpackTrans() {
         int[] result = new int[9272];
@@ -544,6 +637,8 @@ public class LuaLexer {
         offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
         return result;
     }
+
+    /* user code: */
 
     private static int zzUnpackTrans(String packed, int offset, int[] result) {
         int i = 0;       /* index in packed string  */
@@ -557,34 +652,6 @@ public class LuaLexer {
         }
         return j;
     }
-
-
-    /* error codes */
-    private static final int ZZ_UNKNOWN_ERROR = 0;
-    private static final int ZZ_NO_MATCH = 1;
-    private static final int ZZ_PUSHBACK_2BIG = 2;
-
-    /* error messages for the codes above */
-    private static final String ZZ_ERROR_MSG[] = {
-            "Unknown internal scanner error",
-            "Error: could not match input",
-            "Error: pushback value was too large"
-    };
-
-    /**
-     * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
-     */
-    private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
-
-    private static final String ZZ_ATTRIBUTE_PACKED_0 =
-            "\1\0\1\1\5\0\1\11\1\1\1\11\3\1\1\11" +
-                    "\14\1\2\11\1\1\1\11\16\1\2\11\1\1\6\11" +
-                    "\1\1\1\11\2\1\1\11\3\1\1\0\1\11\3\1" +
-                    "\1\0\16\1\1\11\1\0\1\11\2\0\15\1\13\11" +
-                    "\4\0\1\1\2\0\2\1\1\11\2\0\10\1\2\11" +
-                    "\15\1\1\0\2\1\1\0\1\1\4\0\21\1\2\0" +
-                    "\2\1\2\0\14\1\1\0\1\1\2\0\7\1\3\0" +
-                    "\4\1\1\0\3\1\2\0\2\1";
 
     private static int[] zzUnpackAttribute() {
         int[] result = new int[215];
@@ -606,91 +673,21 @@ public class LuaLexer {
     }
 
     /**
-     * the input device
+     * Unpacks the compressed character translation table.
+     *
+     * @param packed the packed character translation table
+     * @return the unpacked character translation table
      */
-    private java.io.Reader zzReader;
-
-    /**
-     * the current state of the DFA
-     */
-    private int zzState;
-
-    /**
-     * the current lexical state
-     */
-    private int zzLexicalState = YYINITIAL;
-
-    /**
-     * this buffer contains the current text to be matched and is
-     * the source of the yytext() string
-     */
-    private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
-
-    /**
-     * the textposition at the last accepting state
-     */
-    private int zzMarkedPos;
-
-    /**
-     * the current text position in the buffer
-     */
-    private int zzCurrentPos;
-
-    /**
-     * startRead marks the beginning of the yytext() string in the buffer
-     */
-    private int zzStartRead;
-
-    /**
-     * endRead marks the last character in the buffer, that has been read
-     * from input
-     */
-    private int zzEndRead;
-
-    /**
-     * number of newlines encountered up to the start of the matched text
-     */
-    private int yyline;
-
-    /**
-     * the number of characters up to the start of the matched text
-     */
-    private int yychar;
-
-    /**
-     * the number of characters from the last newline up to the start of the
-     * matched text
-     */
-    private int yycolumn;
-
-    /**
-     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
-     */
-    private boolean zzAtBOL = true;
-
-    /**
-     * zzAtEOF == true <=> the scanner is at the EOF
-     */
-    private boolean zzAtEOF;
-
-    /**
-     * denotes if the user-EOF-code has already been executed
-     */
-    private boolean zzEOFDone;
-
-    /**
-     * The number of occupied positions in zzBuffer beyond zzEndRead.
-     * When a lead/high surrogate has been read from the input stream
-     * into the final zzBuffer position, this will have a value of 1;
-     * otherwise, it will have a value of 0.
-     */
-    private int zzFinalHighSurrogate = 0;
-
-    /* user code: */
-
-
-    public LuaLexer(CharSequence src) {
-        this(new CharSeqReader(src));
+    private static char[] zzUnpackCMap(String packed) {
+        char[] map = new char[0x110000];
+        int i = 0;  /* index in packed string  */
+        int j = 0;  /* index in unpacked array */
+        while (i < 2884) {
+            int count = packed.charAt(i++);
+            char value = packed.charAt(i++);
+            do map[j++] = value; while (--count > 0);
+        }
+        return map;
     }
 
     public int yyline() {
@@ -704,8 +701,6 @@ public class LuaLexer {
     public int yychar() {
         return yychar;
     }
-
-    private int nBrackets = 0;
 
     private boolean checkAhead(char c, int offset) {
         return this.zzMarkedPos + offset >= this.zzBuffer.length ? false : this.zzBuffer[this.zzMarkedPos + offset] == c;
@@ -735,36 +730,6 @@ public class LuaLexer {
             redundant = yylength() - index - nBrackets - 2;
         return redundant;
     }
-
-
-    /**
-     * Creates a new scanner
-     *
-     * @param in the java.io.Reader to read input from.
-     */
-    public LuaLexer(java.io.Reader in) {
-        this.zzReader = in;
-    }
-
-
-    /**
-     * Unpacks the compressed character translation table.
-     *
-     * @param packed the packed character translation table
-     * @return the unpacked character translation table
-     */
-    private static char[] zzUnpackCMap(String packed) {
-        char[] map = new char[0x110000];
-        int i = 0;  /* index in packed string  */
-        int j = 0;  /* index in unpacked array */
-        while (i < 2884) {
-            int count = packed.charAt(i++);
-            char value = packed.charAt(i++);
-            do map[j++] = value; while (--count > 0);
-        }
-        return map;
-    }
-
 
     /**
      * Refills the input buffer.

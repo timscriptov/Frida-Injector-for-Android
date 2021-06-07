@@ -29,11 +29,11 @@ import java.util.List;
  */
 public class DocumentProvider implements java.lang.CharSequence {
 
+    private final Document _theText;
     /**
      * Current position in the text. Range [ 0, _theText.getTextLength() )
      */
     private int _currIndex;
-    private final Document _theText;
 
     public DocumentProvider(Document.TextFieldMetrics metrics) {
         _currIndex = 0;
@@ -278,6 +278,10 @@ public class DocumentProvider implements java.lang.CharSequence {
         _theText.setMetrics(metrics);
     }
 
+    public boolean isWordWrap() {
+        return _theText.isWordWrap();
+    }
+
     /**
      * Enable/disable word wrap for the document. If enabled, the document is
      * immediately analyzed for word wrap breakpoints, which might take an
@@ -285,10 +289,6 @@ public class DocumentProvider implements java.lang.CharSequence {
      */
     public void setWordWrap(boolean enable) {
         _theText.setWordWrap(enable);
-    }
-
-    public boolean isWordWrap() {
-        return _theText.isWordWrap();
     }
 
     /**

@@ -63,6 +63,10 @@ public class Document extends TextBuffer {
         _metrics = metrics;
     }
 
+    public boolean isWordWrap() {
+        return _isWordWrap;
+    }
+
     /**
      * Enable/disable word wrap. If enabled, the document is immediately
      * analyzed for word wrap breakpoints, which might take an arbitrarily long time.
@@ -76,11 +80,6 @@ public class Document extends TextBuffer {
             analyzeWordWrap();
         }
     }
-
-    public boolean isWordWrap() {
-        return _isWordWrap;
-    }
-
 
     @Override
     public synchronized void delete(int charOffset, int totalChars, long timestamp, boolean undoable) {

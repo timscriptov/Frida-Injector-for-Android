@@ -3,8 +3,6 @@ package com.mcal.fridainjectorpe.editor.lang.cpp;
 import com.mcal.fridainjectorpe.editor.lang.Language;
 
 public class CppLanguage extends Language {
-    private static Language _theOne = null;
-
     private final static String[] keywords = {
             "bool", "char", "double", "float", "int", "long", "short", "void", "wchar_t",
             "auto", "const", "extern", "mutable", "register", "static", "volatile",
@@ -29,14 +27,12 @@ public class CppLanguage extends Language {
             , "tan(double arg):double", "tanh(double arg):double", "time(time_t *time):time_t", "tmpfile():FILE *", "tmpnam(char *name):char *", "tolower(int ch):int", "toupper(int ch):int", "ungetc(int ch, FILE *stream):int", "va_arg(va_list arg_ptr,type):type", "vprintf(char *format,va_list arg_ptr):int", "vfprintf(FILE *stream,const char *format,va_list arg_ptr):int", "vsprintf(char *buffer,char *format,va_list arg_ptr):int"
 
     };
-
     private final static String[] preDefineField = {
             "__LINE__", "__FILE__", "__DATE__", "__TIME__", "__cplusplus", "__STDC__", "__func__", "__VA_ARGS__", "__attribute__"
     };
     private final static String[] cppNamespace = {
             "std"
     };
-
     private final static String[] cppClasses = {
             //io
             "fstream", "ifstream", "ofstream", "cout", "cin", "cerr", "endl"
@@ -45,14 +41,12 @@ public class CppLanguage extends Language {
             //c++11 模板库
             , "array", "forward_list", "unordered_map", "unordered_set"
     };
-
     private final static String[] cppFunctions = {
             "any()", "append()", "assign()", "at()", "back()", "bad()", "begin()", "c_str()", "capacity()", "clear()", "compare()", "copy()", "count()", "data()", "empty()", "end()", "eof()", "equal_range()", "erase()", "fail()", "fill()", "find()", "find_first_not_of()", "find_first_of()", "find_last_not_of()", "find_last_of()", "flags()", "flip()", "flush()", "front()", "fstream"
             , "gcount()", "get()", "get_allocator()", "getline()", "good()", "ignore()", "insert()", "iterator()", "key_comp()", "length()", "lower_bound()", "max_size()", "merge()", "none()", "open()", "peek()", "pop()", "pop_back()", "pop_front()", "precision()", "push()", "push_back()", "push_front()", "put()", "putback"
             , "rbegin()", "rdstate()", "read()", "remove()", "remove_if()", "rend()", "replace()", "reserve()", "reset()", "resize()", "reverse()", "rfind()", "seekg()", "seekp()", "set()", "setf()", "size()", "sort()", "splice()", "substr()", "swap()", "sync_with_stdio()", "tellg()", "tellp()", "test()", "to_string()", "to_ulong()", "top"
             , "unique()", "unsetf()", "upper_bound()", "value_comp()", "width()", "write()"
     };
-
     private final static String[] extraWord = {
             "define", "include", "ifdef", "endif", "ifndef", "error", "elif", "line", "pragma", "undef", "main"
     };
@@ -61,6 +55,18 @@ public class CppLanguage extends Language {
             '/', '*', '&', '!', '|', ':', '[', ']', '<', '>',
             '?', '~', '%', '^'
     };
+    private static Language _theOne = null;
+
+    private CppLanguage() {
+        setOperators(BASIC_C_OPERATORS);
+        setKeywords(keywords);
+        setNames(cFunctions);//先setName才能addName
+        addNames(preDefineField);
+        addNames(cppNamespace);
+        addNames(cppClasses);
+        addNames(cppFunctions);
+        addNames(extraWord);
+    }
 
     public static Language getInstance() {
         if (_theOne == null) {
@@ -76,16 +82,5 @@ public class CppLanguage extends Language {
         System.arraycopy(names, 0, news, old.length, names.length);
         this.setNames(news);
 
-    }
-
-    private CppLanguage() {
-        setOperators(BASIC_C_OPERATORS);
-        setKeywords(keywords);
-        setNames(cFunctions);//先setName才能addName
-        addNames(preDefineField);
-        addNames(cppNamespace);
-        addNames(cppClasses);
-        addNames(cppFunctions);
-        addNames(extraWord);
     }
 }

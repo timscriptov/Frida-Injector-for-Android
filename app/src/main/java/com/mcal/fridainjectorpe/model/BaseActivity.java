@@ -26,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mcal.fridainjectorpe.data.NightMode;
 import com.mcal.fridainjectorpe.data.ScreenMode;
-import com.mcal.fridainjectorpe.data.WordWrap;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,7 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected final int REQUEST_CODE_SETTINGS = 0;
     private ScreenMode.Mode screenMode;
     private NightMode.Mode nightMode;
-    private WordWrap.Mode wordWrap;
+    //private WordWrap.Mode wordWrap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         screenMode = ScreenMode.getCurrentMode();
         nightMode = NightMode.getCurrentMode();
-        wordWrap = WordWrap.getCurrentMode();
+        //wordWrap = WordWrap.getCurrentMode();
 
         if (screenMode.equals(ScreenMode.Mode.FULLSCREEN)) {
             getWindow().getDecorView().setSystemUiVisibility(
@@ -68,7 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (!screenMode.equals(ScreenMode.getCurrentMode())) recreate();
         if (!nightMode.equals(NightMode.getCurrentMode())) recreate();
-        if (!wordWrap.equals(WordWrap.getCurrentMode())) recreate();
+        //if (!wordWrap.equals(WordWrap.getCurrentMode())) recreate();
 
         if (requestCode == REQUEST_CODE_SETTINGS & resultCode == AppCompatActivity.RESULT_OK) {
             recreate();

@@ -8,24 +8,23 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 
 public abstract class ColorScheme {
-    public enum Colorable {
-        FOREGROUND,
-        BACKGROUND,
-        SELECTION_FOREGROUND,
-        SELECTION_BACKGROUND,
-        CARET_FOREGROUND,
-        CARET_BACKGROUND,
-        CARET_DISABLED,
-        LINE_HIGHLIGHT,
-        NON_PRINTING_GLYPH,
-        COMMENT,
-        KEYWORD,
-        NAME,
-        LITERAL,
-        STRING,
-        SECONDARY
-    }
-
+    // In ARGB format: 0xAARRGGBB
+    private static final int BLACK = 0xF0000000;
+    private static final int BLUE = 0xFF0000FF;
+    private static final int DARK_RED = 0xFF8B0000;
+    private static final int DARK_BLUE = 0xFFD040DD;
+    private static final int GREY = 0xFF808080;
+    private static final int LIGHT_GREY = 0xFFC0C0C0;
+    private static final int MAROON = 0xFF800000;
+    private static final int INDIGO = 0xFF2A40FF;
+    private static final int OLIVE_GREEN = 0xFF3F7F5F;
+    private static final int PURPLE = 0xFFDD4488;
+    private static final int RED = 0x44FF0000;
+    private static final int WHITE = 0xFFFFFFEE;
+    private static final int PURPLE2 = 0xFFFF00FF;
+    private static final int LIGHT_BLUE = 0xFF6080FF;
+    private static final int LIGHT_BLUE2 = 0xFF40B0FF;
+    private static final int GREEN = 0xFF88AA88;
     protected HashMap<Colorable, Integer> _colors = generateDefaultColors();
 
     public void setColor(Colorable colorable, int color) {
@@ -103,21 +102,21 @@ public abstract class ColorScheme {
         return colors;
     }
 
-    // In ARGB format: 0xAARRGGBB
-    private static final int BLACK = 0xF0000000;
-    private static final int BLUE = 0xFF0000FF;
-    private static final int DARK_RED = 0xFF8B0000;
-    private static final int DARK_BLUE = 0xFFD040DD;
-    private static final int GREY = 0xFF808080;
-    private static final int LIGHT_GREY = 0xFFC0C0C0;
-    private static final int MAROON = 0xFF800000;
-    private static final int INDIGO = 0xFF2A40FF;
-    private static final int OLIVE_GREEN = 0xFF3F7F5F;
-    private static final int PURPLE = 0xFFDD4488;
-    private static final int RED = 0x44FF0000;
-    private static final int WHITE = 0xFFFFFFEE;
-    private static final int PURPLE2 = 0xFFFF00FF;
-    private static final int LIGHT_BLUE = 0xFF6080FF;
-    private static final int LIGHT_BLUE2 = 0xFF40B0FF;
-    private static final int GREEN = 0xFF88AA88;
+    public enum Colorable {
+        FOREGROUND,
+        BACKGROUND,
+        SELECTION_FOREGROUND,
+        SELECTION_BACKGROUND,
+        CARET_FOREGROUND,
+        CARET_BACKGROUND,
+        CARET_DISABLED,
+        LINE_HIGHLIGHT,
+        NON_PRINTING_GLYPH,
+        COMMENT,
+        KEYWORD,
+        NAME,
+        LITERAL,
+        STRING,
+        SECONDARY
+    }
 }

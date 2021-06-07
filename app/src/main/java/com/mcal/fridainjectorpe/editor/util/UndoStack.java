@@ -43,6 +43,10 @@ import java.util.LinkedList;
  * need to be moved.
  */
 public class UndoStack {
+    /**
+     * timestamp for the previous edit operation
+     */
+    long _lastEditTime = -1;
     private TextBuffer _buf;
     private LinkedList<Command> _stack = new LinkedList<Command>();
     private boolean _isBatchEdit = false;
@@ -54,10 +58,6 @@ public class UndoStack {
      * where new entries should go
      */
     private int _top = 0;
-    /**
-     * timestamp for the previous edit operation
-     */
-    long _lastEditTime = -1;
 
     public UndoStack(TextBuffer buf) {
         _buf = buf;

@@ -3,8 +3,6 @@ package com.mcal.fridainjectorpe.editor.lang.ruby;
 import com.mcal.fridainjectorpe.editor.lang.Language;
 
 public class RubyLanguage extends Language {
-    private static RubyLanguage _theOne = null;
-
     private final static String[] keywords = {
             "alias", "and", "BEGIN", "begin", "break", "case", "catch", "class", "def",
             "defined?", "do", "else", "elsif", "END", "end", "ensure", "false",
@@ -13,7 +11,19 @@ public class RubyLanguage extends Language {
             "super", "then", "throw", "true", "undef", "unless", "until", "when", "while",
             "yield", "self", "nil", "true", "false", "TRUE", "FALSE", "NIL"
     };
+    private static RubyLanguage _theOne = null;
 
+
+    private RubyLanguage() {
+        super.setKeywords(keywords);
+    }
+
+    public static RubyLanguage getInstance() {
+        if (_theOne == null) {
+            _theOne = new RubyLanguage();
+        }
+        return _theOne;
+    }
 
     @Override
     public boolean isWordStart(char c) {
@@ -38,16 +48,5 @@ public class RubyLanguage extends Language {
     @Override
     public boolean isMultilineStartDelimiter(char c0, char c1) {
         return false;
-    }
-
-    public static RubyLanguage getInstance() {
-        if (_theOne == null) {
-            _theOne = new RubyLanguage();
-        }
-        return _theOne;
-    }
-
-    private RubyLanguage() {
-        super.setKeywords(keywords);
     }
 }

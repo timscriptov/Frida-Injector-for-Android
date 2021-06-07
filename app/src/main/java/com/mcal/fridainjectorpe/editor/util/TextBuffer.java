@@ -20,12 +20,6 @@ import java.util.Vector;
 //TODO Have all methods work with charOffsets and move all gap handling to logicalToRealIndex()
 public class TextBuffer implements java.lang.CharSequence {
 
-    @Override
-    public int length() {
-        // TODO: Implement this method
-        return getTextLength() - 1;
-    }
-
     // gap size must be > 0 to insert into full buffers successfully
     protected final static int MIN_GAP_SIZE = 50;
     protected char[] _contents;
@@ -36,16 +30,15 @@ public class TextBuffer implements java.lang.CharSequence {
     protected int _gapEndIndex;
     protected int _lineCount;
     /**
+     * Continuous seq of chars that have the same format (color, font, etc.)
+     */
+    protected List<Pair> _spans;
+    /**
      * The number of times memory is allocated for the buffer
      */
     private int _allocMultiplier;
     private TextBufferCache _cache;
     private UndoStack _undoStack;
-
-    /**
-     * Continuous seq of chars that have the same format (color, font, etc.)
-     */
-    protected List<Pair> _spans;
 
     public TextBuffer() {
         _contents = new char[MIN_GAP_SIZE + 1]; // extra char for EOF
@@ -76,6 +69,12 @@ public class TextBuffer implements java.lang.CharSequence {
             return (int) bufferSize;
         }
         return -1;
+    }
+
+    @Override
+    public int length() {
+        // TODO: Implement this method
+        return getTextLength() - 1;
     }
 
     synchronized public void setBuffer(char[] newBuffer, int textSize, int lineCount) {

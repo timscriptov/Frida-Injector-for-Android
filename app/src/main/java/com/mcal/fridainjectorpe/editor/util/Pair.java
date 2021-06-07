@@ -20,17 +20,13 @@ public final class Pair {
         second = y;
     }
 
-    public final void setFirst(int value) {
-        first = value;
-    }
-
-    public final void setSecond(int value) {
-        second = value;
-    }
-
     @Contract(pure = true)
     public final int getFirst() {
         return first;
+    }
+
+    public final void setFirst(int value) {
+        first = value;
     }
 
     @Contract(pure = true)
@@ -38,6 +34,9 @@ public final class Pair {
         return second;
     }
 
+    public final void setSecond(int value) {
+        second = value;
+    }
 
     @NotNull
     @Contract(pure = true)

@@ -6,22 +6,20 @@ package com.mcal.fridainjectorpe.editor.lang;
 
 
 public class LanguageNonProg extends Language {
+    private final static String[] keywords = {};
+    private final static char[] operators = {};
     private static LanguageNonProg _theOne = null;
 
-    private final static String[] keywords = {};
-
-    private final static char[] operators = {};
+    private LanguageNonProg() {
+        super.setKeywords(keywords);
+        super.setOperators(operators);
+    }
 
     public static LanguageNonProg getInstance() {
         if (_theOne == null) {
             _theOne = new LanguageNonProg();
         }
         return _theOne;
-    }
-
-    private LanguageNonProg() {
-        super.setKeywords(keywords);
-        super.setOperators(operators);
     }
 
     @Override

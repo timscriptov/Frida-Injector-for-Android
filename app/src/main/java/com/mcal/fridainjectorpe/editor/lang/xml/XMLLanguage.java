@@ -10,14 +10,14 @@ public class XMLLanguage extends Language {
 
     private static XMLLanguage _theOne;
 
+    private XMLLanguage() {
+    }
+
     public static Language getInstance() {
         if (_theOne == null) {
             _theOne = new XMLLanguage();
         }
         return _theOne;
-    }
-
-    private XMLLanguage() {
     }
 
     /**

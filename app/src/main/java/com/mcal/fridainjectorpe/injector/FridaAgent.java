@@ -16,6 +16,20 @@ import java.util.LinkedHashMap;
 
 public class FridaAgent {
 
+    static final String sRegisterClassLoaderAgent = "" +
+            "Java.performNow(function() {" +
+            "    var app = Java.use('android.app.ActivityThread').currentApplication();" +
+            "    var context = app.getApplicationContext();" +
+            "    var pm = context.getPackageManager();" +
+            "    var ai = pm.getApplicationInfo(context.getPackageName(), 0);" +
+            "    var apkPath = ai.publicSourceDir.value;" +
+            "    apkPath = apkPath.substring(0, apkPath.lastIndexOf('/')) + '/xd.apk';" +
+            "    var cl = Java.use('dalvik.system.DexClassLoader').$new(" +
+            "            apkPath, context.getCacheDir().getAbsolutePath(), null," +
+            "            context.getClass().getClassLoader());" +
+            "    Java.classFactory['xd_loader'] = cl;" +
+            "});" +
+            "\n";
     private static final String sWrapper = "" +
             "console.log = function() {" +
             "    var args = arguments;" +
@@ -38,22 +52,6 @@ public class FridaAgent {
             "    });" +
             "}" +
             "\n";
-
-    static final String sRegisterClassLoaderAgent = "" +
-            "Java.performNow(function() {" +
-            "    var app = Java.use('android.app.ActivityThread').currentApplication();" +
-            "    var context = app.getApplicationContext();" +
-            "    var pm = context.getPackageManager();" +
-            "    var ai = pm.getApplicationInfo(context.getPackageName(), 0);" +
-            "    var apkPath = ai.publicSourceDir.value;" +
-            "    apkPath = apkPath.substring(0, apkPath.lastIndexOf('/')) + '/xd.apk';" +
-            "    var cl = Java.use('dalvik.system.DexClassLoader').$new(" +
-            "            apkPath, context.getCacheDir().getAbsolutePath(), null," +
-            "            context.getClass().getClassLoader());" +
-            "    Java.classFactory['xd_loader'] = cl;" +
-            "});" +
-            "\n";
-
     private final Context mContext;
     private final String mWrappedAgent;
     private final LinkedHashMap<String, Class<? extends FridaInterface>> mInterfaces =

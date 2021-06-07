@@ -37,27 +37,27 @@ public final class Preferences {
         preferences.edit().putString("apk_package_name", pkg).apply();
     }
 
-    public static void setWordWrap(boolean value) {
-        preferences.edit().putBoolean("wordwrap", value).apply();
-    }
-
     public static boolean isWordWrap() {
         return preferences.getBoolean("wordwrap", false);
     }
 
-    public static void setNightMode(boolean value) {
-        preferences.edit().putBoolean("night_mode", value).apply();
+    public static void setWordWrap(boolean value) {
+        preferences.edit().putBoolean("wordwrap", value).apply();
     }
 
     public static boolean isNightMode() {
         return preferences.getBoolean("night_mode", false);
     }
 
-    public static void setFullscreenMode(boolean value) {
-        preferences.edit().putBoolean("fullscreen_mode", value).apply();
+    public static void setNightMode(boolean value) {
+        preferences.edit().putBoolean("night_mode", value).apply();
     }
 
     public static boolean isFullscreenMode() {
         return preferences.getBoolean("fullscreen_mode", false);
+    }
+
+    public static void setFullscreenMode(boolean value) {
+        preferences.edit().putBoolean("fullscreen_mode", value).apply();
     }
 }

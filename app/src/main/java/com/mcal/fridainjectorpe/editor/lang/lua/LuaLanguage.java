@@ -6,11 +6,8 @@ import com.mcal.fridainjectorpe.editor.lang.Language;
  * Singleton class containing the symbols and operators of the Javascript language
  */
 public class LuaLanguage extends Language {
-    private static LuaLanguage _theOne = null;
-
     private final static String keywordTarget = "and|break|do|else|elseif|end|false|for|function|goto|if|in|local|nil|not|or|repeat|return|then|true|until|while";
     private final static String globalTarget = "__add|__band|__bnot|__bor|__bxor|__call|__concat|__div|__eq|__idiv|__index|__le|__len|__lt|__mod|__mul|__newindex|__pow|__shl|__shr|__sub|__unm|_ENV|_G|assert|collectgarbage|dofile|error|findtable|getmetatable|ipairs|load|loadfile|loadstring|module|next|pairs|pcall|print|rawequal|rawget|rawlen|rawset|require|select|self|setmetatable|tointeger|tonumber|tostring|type|unpack|xpcall";
-
     private final static String packageName = "coroutine|debug|io|luajava|math|os|package|string|table|utf8";
     private final static String package_coroutine = "create|isyieldable|resume|running|status|wrap|yield";
     private final static String package_debug = "debug|gethook|getinfo|getlocal|getmetatable|getregistry|getupvalue|getuservalue|sethook|setlocal|setmetatable|setupvalue|setuservalue|traceback|upvalueid|upvaluejoin";
@@ -24,23 +21,15 @@ public class LuaLanguage extends Language {
     private final static String package_utf8 = "char|charpattern|codepoint|codes|len|offset";
     private final static String extFunctionTarget = "this|activity|call|compile|dump|each|enum|import|loadbitmap|loadlayout|loadmenu|service|set|task|thread|timer";
     private final static String functionTarget = globalTarget + "|" + extFunctionTarget + "|" + packageName;
-    ;
-
     private final static String[] keywords = keywordTarget.split("\\|");
+    ;
     private final static String[] names = functionTarget.split("\\|");
-
     private final static char[] LUA_OPERATORS = {
             '(', ')', '{', '}', ',', ';', '=', '+', '-',
             '/', '*', '&', '!', '|', ':', '[', ']', '<', '>',
             '?', '~', '%', '^'
     };
-
-    public static Language getInstance() {
-        if (_theOne == null) {
-            _theOne = new LuaLanguage();
-        }
-        return _theOne;
-    }
+    private static LuaLanguage _theOne = null;
 
     private LuaLanguage() {
         super.setOperators(LUA_OPERATORS);
@@ -58,6 +47,12 @@ public class LuaLanguage extends Language {
         addBasePackage("debug", package_debug.split("\\|"));
     }
 
+    public static Language getInstance() {
+        if (_theOne == null) {
+            _theOne = new LuaLanguage();
+        }
+        return _theOne;
+    }
 
     @Override
     public LuaTokenizer getTokenizer() {

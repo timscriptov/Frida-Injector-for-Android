@@ -15,12 +15,6 @@ public class CppLexer {
      * This character denotes the end of file
      */
     public static final int YYEOF = -1;
-
-    /**
-     * initial size of the lookahead buffer
-     */
-    private static final int ZZ_BUFFERSIZE = 16384;
-
     /**
      * lexical states
      */
@@ -30,7 +24,10 @@ public class CppLexer {
     public static final int YYINITIAL = 0;
     public static final int DEFINE = 4;
     public static final int CHARLITERAL = 2;
-
+    /**
+     * initial size of the lookahead buffer
+     */
+    private static final int ZZ_BUFFERSIZE = 16384;
     /**
      * Translates characters to character classes
      */
@@ -154,12 +151,6 @@ public class CppLexer {
      * Translates characters to character classes
      */
     private static final char[] ZZ_CMAP = zzUnpackCMap(ZZ_CMAP_PACKED);
-
-    /**
-     * Translates DFA states to action switch labels.
-     */
-    private static final int[] ZZ_ACTION = zzUnpackAction();
-
     private static final String ZZ_ACTION_PACKED_0 =
             "\6\0\1\1\2\2\1\3\2\4\1\5\2\6\1\7" +
                     "\1\4\1\10\1\11\1\1\23\5\1\12\1\13\1\14" +
@@ -174,32 +165,10 @@ public class CppLexer {
                     "\1\5\3\6\1\5\1\0\2\6\1\0\2\6\1\0" +
                     "\2\6\1\0\2\6\1\0\2\6\1\0\2\6\1\0" +
                     "\1\6\1\34\1\0\5\34";
-
-    private static int[] zzUnpackAction() {
-        int[] result = new int[337];
-        int offset = 0;
-        offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
-        return result;
-    }
-
-    private static int zzUnpackAction(String packed, int offset, int[] result) {
-        int i = 0;       /* index in packed string  */
-        int j = offset;  /* index in unpacked array */
-        int l = packed.length();
-        while (i < l) {
-            int count = packed.charAt(i++);
-            int value = packed.charAt(i++);
-            do result[j++] = value; while (--count > 0);
-        }
-        return j;
-    }
-
-
     /**
-     * Translates a state to a row index in the transition table
+     * Translates DFA states to action switch labels.
      */
-    private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
-
+    private static final int[] ZZ_ACTION = zzUnpackAction();
     private static final String ZZ_ROWMAP_PACKED_0 =
             "\0\0\0\103\0\206\0\311\0\u010c\0\u014f\0\u0192\0\u01d5" +
                     "\0\u0192\0\u0192\0\u0218\0\u025b\0\u029e\0\u02e1\0\u0324\0\u0367" +
@@ -244,30 +213,10 @@ public class CppLexer {
                     "\0\u4ba3\0\u4be6\0\u4c29\0\u4c6c\0\u4caf\0\u4cf2\0\u4d35\0\u4d78" +
                     "\0\u4dbb\0\u4dfe\0\u4dfe\0\u4e41\0\u4e84\0\u4ec7\0\u4f0a\0\u4f4d" +
                     "\0\u4f90";
-
-    private static int[] zzUnpackRowMap() {
-        int[] result = new int[337];
-        int offset = 0;
-        offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
-        return result;
-    }
-
-    private static int zzUnpackRowMap(String packed, int offset, int[] result) {
-        int i = 0;  /* index in packed string  */
-        int j = offset;  /* index in unpacked array */
-        int l = packed.length();
-        while (i < l) {
-            int high = packed.charAt(i++) << 16;
-            result[j++] = high | packed.charAt(i++);
-        }
-        return j;
-    }
-
     /**
-     * The transition table of the DFA
+     * Translates a state to a row index in the transition table
      */
-    private static final int[] ZZ_TRANS = zzUnpackTrans();
-
+    private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
     private static final String ZZ_TRANS_PACKED_0 =
             "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\7" +
                     "\1\16\1\17\3\15\3\17\1\15\1\20\1\15\1\21" +
@@ -661,6 +610,150 @@ public class CppLexer {
                     "\1\120\2\0\1\125\1\0\1\125\51\0\2\117\1\120" +
                     "\2\0\3\117\1\125\1\126\1\127\6\0\1\127\2\0" +
                     "\1\120\2\0\1\125\1\0\1\125\41\0";
+    /**
+     * The transition table of the DFA
+     */
+    private static final int[] ZZ_TRANS = zzUnpackTrans();
+    /* error codes */
+    private static final int ZZ_UNKNOWN_ERROR = 0;
+    private static final int ZZ_NO_MATCH = 1;
+    private static final int ZZ_PUSHBACK_2BIG = 2;
+    /* error messages for the codes above */
+    private static final String ZZ_ERROR_MSG[] = {
+            "Unkown internal scanner error",
+            "Error: could not match input",
+            "Error: pushback value was too large"
+    };
+    private static final String ZZ_ATTRIBUTE_PACKED_0 =
+            "\6\0\1\11\1\1\2\11\7\1\2\11\24\1\10\11" +
+                    "\2\1\1\11\5\1\2\11\1\1\2\11\1\1\1\11" +
+                    "\1\1\1\11\3\1\1\11\6\1\1\11\1\1\1\0" +
+                    "\2\1\1\11\1\0\3\1\1\11\1\1\10\0\52\1" +
+                    "\1\11\1\1\1\0\1\1\1\11\1\0\5\1\5\0" +
+                    "\1\1\4\0\55\1\1\11\1\0\3\1\10\0\42\1" +
+                    "\1\0\1\11\4\0\25\1\1\11\3\0\36\1\1\0" +
+                    "\2\1\1\0\2\1\1\0\2\1\1\0\2\1\1\0" +
+                    "\2\1\1\0\2\1\1\0\2\1\1\0\5\1";
+    /**
+     * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
+     */
+    private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
+    /**
+     * the input device
+     */
+    private java.io.Reader zzReader;
+    /**
+     * the current state of the DFA
+     */
+    private int zzState;
+    /**
+     * the current lexical state
+     */
+    private int zzLexicalState = YYINITIAL;
+    /**
+     * this buffer contains the current text to be matched and is
+     * the source of the yytext() string
+     */
+    private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
+    /**
+     * the textposition at the last accepting state
+     */
+    private int zzMarkedPos;
+    /**
+     * the textposition at the last state to be included in yytext
+     */
+    private int zzPushbackPos;
+    /**
+     * the current text position in the buffer
+     */
+    private int zzCurrentPos;
+    /**
+     * startRead marks the beginning of the yytext() string in the buffer
+     */
+    private int zzStartRead;
+    /**
+     * endRead marks the last character in the buffer, that has been read
+     * from input
+     */
+    private int zzEndRead;
+    /**
+     * number of newlines encountered up to the start of the matched text
+     */
+    private int yyline;
+    /**
+     * the number of characters up to the start of the matched text
+     */
+    private int yychar;
+    /**
+     * the number of characters from the last newline up to the start of the
+     * matched text
+     */
+    private int yycolumn;
+    /**
+     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
+     */
+    private boolean zzAtBOL = true;
+    /**
+     * zzAtEOF == true <=> the scanner is at the EOF
+     */
+    private boolean zzAtEOF;
+
+    /**
+     * Creates a new scanner
+     * There is also a java.io.InputStream version of this constructor.
+     *
+     * @param in the java.io.Reader to read input from.
+     */
+    public CppLexer(java.io.Reader in) {
+        this.zzReader = in;
+    }
+
+    /**
+     * Creates a new scanner.
+     * There is also java.io.Reader version of this constructor.
+     *
+     * @param in the java.io.Inputstream to read input from.
+     */
+    public CppLexer(java.io.InputStream in) {
+        this(new java.io.InputStreamReader(in));
+    }
+
+    private static int[] zzUnpackAction() {
+        int[] result = new int[337];
+        int offset = 0;
+        offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
+        return result;
+    }
+
+    private static int zzUnpackAction(String packed, int offset, int[] result) {
+        int i = 0;       /* index in packed string  */
+        int j = offset;  /* index in unpacked array */
+        int l = packed.length();
+        while (i < l) {
+            int count = packed.charAt(i++);
+            int value = packed.charAt(i++);
+            do result[j++] = value; while (--count > 0);
+        }
+        return j;
+    }
+
+    private static int[] zzUnpackRowMap() {
+        int[] result = new int[337];
+        int offset = 0;
+        offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
+        return result;
+    }
+
+    private static int zzUnpackRowMap(String packed, int offset, int[] result) {
+        int i = 0;  /* index in packed string  */
+        int j = offset;  /* index in unpacked array */
+        int l = packed.length();
+        while (i < l) {
+            int high = packed.charAt(i++) << 16;
+            result[j++] = high | packed.charAt(i++);
+        }
+        return j;
+    }
 
     private static int[] zzUnpackTrans() {
         int[] result = new int[20435];
@@ -682,34 +775,7 @@ public class CppLexer {
         return j;
     }
 
-
-    /* error codes */
-    private static final int ZZ_UNKNOWN_ERROR = 0;
-    private static final int ZZ_NO_MATCH = 1;
-    private static final int ZZ_PUSHBACK_2BIG = 2;
-
-    /* error messages for the codes above */
-    private static final String ZZ_ERROR_MSG[] = {
-            "Unkown internal scanner error",
-            "Error: could not match input",
-            "Error: pushback value was too large"
-    };
-
-    /**
-     * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
-     */
-    private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
-
-    private static final String ZZ_ATTRIBUTE_PACKED_0 =
-            "\6\0\1\11\1\1\2\11\7\1\2\11\24\1\10\11" +
-                    "\2\1\1\11\5\1\2\11\1\1\2\11\1\1\1\11" +
-                    "\1\1\1\11\3\1\1\11\6\1\1\11\1\1\1\0" +
-                    "\2\1\1\11\1\0\3\1\1\11\1\1\10\0\52\1" +
-                    "\1\11\1\1\1\0\1\1\1\11\1\0\5\1\5\0" +
-                    "\1\1\4\0\55\1\1\11\1\0\3\1\10\0\42\1" +
-                    "\1\0\1\11\4\0\25\1\1\11\3\0\36\1\1\0" +
-                    "\2\1\1\0\2\1\1\0\2\1\1\0\2\1\1\0" +
-                    "\2\1\1\0\2\1\1\0\2\1\1\0\5\1";
+    /* user code: */
 
     private static int[] zzUnpackAttribute() {
         int[] result = new int[337];
@@ -728,102 +794,6 @@ public class CppLexer {
             do result[j++] = value; while (--count > 0);
         }
         return j;
-    }
-
-    /**
-     * the input device
-     */
-    private java.io.Reader zzReader;
-
-    /**
-     * the current state of the DFA
-     */
-    private int zzState;
-
-    /**
-     * the current lexical state
-     */
-    private int zzLexicalState = YYINITIAL;
-
-    /**
-     * this buffer contains the current text to be matched and is
-     * the source of the yytext() string
-     */
-    private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
-
-    /**
-     * the textposition at the last accepting state
-     */
-    private int zzMarkedPos;
-
-    /**
-     * the textposition at the last state to be included in yytext
-     */
-    private int zzPushbackPos;
-
-    /**
-     * the current text position in the buffer
-     */
-    private int zzCurrentPos;
-
-    /**
-     * startRead marks the beginning of the yytext() string in the buffer
-     */
-    private int zzStartRead;
-
-    /**
-     * endRead marks the last character in the buffer, that has been read
-     * from input
-     */
-    private int zzEndRead;
-
-    /**
-     * number of newlines encountered up to the start of the matched text
-     */
-    private int yyline;
-
-    /**
-     * the number of characters up to the start of the matched text
-     */
-    private int yychar;
-
-    /**
-     * the number of characters from the last newline up to the start of the
-     * matched text
-     */
-    private int yycolumn;
-
-    /**
-     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
-     */
-    private boolean zzAtBOL = true;
-
-    /**
-     * zzAtEOF == true <=> the scanner is at the EOF
-     */
-    private boolean zzAtEOF;
-
-    /* user code: */
-
-
-    /**
-     * Creates a new scanner
-     * There is also a java.io.InputStream version of this constructor.
-     *
-     * @param in the java.io.Reader to read input from.
-     */
-    public CppLexer(java.io.Reader in) {
-        this.zzReader = in;
-    }
-
-    /**
-     * Creates a new scanner.
-     * There is also java.io.Reader version of this constructor.
-     *
-     * @param in the java.io.Inputstream to read input from.
-     */
-    public CppLexer(java.io.InputStream in) {
-        this(new java.io.InputStreamReader(in));
     }
 
     /**

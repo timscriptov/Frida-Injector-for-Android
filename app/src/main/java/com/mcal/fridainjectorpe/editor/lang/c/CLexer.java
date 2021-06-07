@@ -14,12 +14,6 @@ public class CLexer {
      * This character denotes the end of file
      */
     public static final int YYEOF = -1;
-
-    /**
-     * initial size of the lookahead buffer
-     */
-    private static final int ZZ_BUFFERSIZE = 16384;
-
     /**
      * lexical states
      */
@@ -29,7 +23,10 @@ public class CLexer {
     public static final int PRETREATMENT = 6;
     public static final int DEFINE = 8;
     public static final int DEFINE_NEW_LINE = 10;
-
+    /**
+     * initial size of the lookahead buffer
+     */
+    private static final int ZZ_BUFFERSIZE = 16384;
     /**
      * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
      * ZZ_LEXSTATE[l+1] is the state in the DFA for the lexical state l
@@ -193,12 +190,6 @@ public class CLexer {
      * Translates characters to character classes
      */
     private static final char[] ZZ_CMAP = zzUnpackCMap(ZZ_CMAP_PACKED);
-
-    /**
-     * Translates DFA states to action switch labels.
-     */
-    private static final int[] ZZ_ACTION = zzUnpackAction();
-
     private static final String ZZ_ACTION_PACKED_0 =
             "\6\0\1\1\2\2\1\3\2\4\1\5\2\6\1\7" +
                     "\1\4\1\10\1\11\1\1\17\5\1\12\1\13\1\14" +
@@ -212,32 +203,10 @@ public class CLexer {
                     "\2\5\14\6\1\0\2\6\1\0\2\6\1\0\2\6" +
                     "\1\0\2\6\1\0\2\6\1\0\2\6\1\0\1\6" +
                     "\1\34\1\0\5\34";
-
-    private static int[] zzUnpackAction() {
-        int[] result = new int[253];
-        int offset = 0;
-        offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
-        return result;
-    }
-
-    private static int zzUnpackAction(String packed, int offset, int[] result) {
-        int i = 0;       /* index in packed string  */
-        int j = offset;  /* index in unpacked array */
-        int l = packed.length();
-        while (i < l) {
-            int count = packed.charAt(i++);
-            int value = packed.charAt(i++);
-            do result[j++] = value; while (--count > 0);
-        }
-        return j;
-    }
-
-
     /**
-     * Translates a state to a row index in the transition table
+     * Translates DFA states to action switch labels.
      */
-    private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
-
+    private static final int[] ZZ_ACTION = zzUnpackAction();
     private static final String ZZ_ROWMAP_PACKED_0 =
             "\0\0\0\105\0\212\0\317\0\u0114\0\u0159\0\u019e\0\u01e3" +
                     "\0\u019e\0\u019e\0\u0228\0\u026d\0\u02b2\0\u02f7\0\u033c\0\u0381" +
@@ -271,30 +240,10 @@ public class CLexer {
                     "\0\u3672\0\u36b7\0\u36fc\0\u3741\0\u3786\0\u37cb\0\u3810\0\u3855" +
                     "\0\u389a\0\u38df\0\u3924\0\u3969\0\u39ae\0\u39f3\0\u39f3\0\u3a38" +
                     "\0\u3a7d\0\u3ac2\0\u3b07\0\u3b4c\0\u3b91";
-
-    private static int[] zzUnpackRowMap() {
-        int[] result = new int[253];
-        int offset = 0;
-        offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
-        return result;
-    }
-
-    private static int zzUnpackRowMap(String packed, int offset, int[] result) {
-        int i = 0;  /* index in packed string  */
-        int j = offset;  /* index in unpacked array */
-        int l = packed.length();
-        while (i < l) {
-            int high = packed.charAt(i++) << 16;
-            result[j++] = high | packed.charAt(i++);
-        }
-        return j;
-    }
-
     /**
-     * The transition table of the DFA
+     * Translates a state to a row index in the transition table
      */
-    private static final int[] ZZ_TRANS = zzUnpackTrans();
-
+    private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
     private static final String ZZ_TRANS_PACKED_0 =
             "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\7" +
                     "\1\16\1\17\3\15\3\17\1\15\1\20\1\15\1\21" +
@@ -604,6 +553,146 @@ public class CLexer {
                     "\1\121\53\0\2\113\1\114\2\0\3\113\1\121\1\122" +
                     "\1\123\6\0\1\123\2\0\1\114\2\0\1\121\1\0" +
                     "\1\121\43\0";
+    /**
+     * The transition table of the DFA
+     */
+    private static final int[] ZZ_TRANS = zzUnpackTrans();
+    /* error codes */
+    private static final int ZZ_UNKNOWN_ERROR = 0;
+    private static final int ZZ_NO_MATCH = 1;
+    private static final int ZZ_PUSHBACK_2BIG = 2;
+    /* error messages for the codes above */
+    private static final String ZZ_ERROR_MSG[] = {
+            "Unknown internal scanner error",
+            "Error: could not match input",
+            "Error: pushback value was too large"
+    };
+    private static final String ZZ_ATTRIBUTE_PACKED_0 =
+            "\6\0\1\11\1\1\2\11\7\1\2\11\20\1\10\11" +
+                    "\2\1\1\11\5\1\2\11\1\1\2\11\1\1\1\11" +
+                    "\1\1\1\11\3\1\1\11\6\1\1\11\1\1\1\0" +
+                    "\2\1\1\11\1\0\3\1\1\11\1\1\10\0\30\1" +
+                    "\1\11\1\1\1\0\1\1\1\11\1\0\5\1\5\0" +
+                    "\1\1\4\0\32\1\1\11\1\0\3\1\10\0\22\1" +
+                    "\1\0\1\11\4\0\12\1\1\11\3\0\16\1\1\0" +
+                    "\2\1\1\0\2\1\1\0\2\1\1\0\2\1\1\0" +
+                    "\2\1\1\0\2\1\1\0\2\1\1\0\5\1";
+    /**
+     * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
+     */
+    private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
+    /**
+     * the input device
+     */
+    private java.io.Reader zzReader;
+    /**
+     * the current state of the DFA
+     */
+    private int zzState;
+    /**
+     * the current lexical state
+     */
+    private int zzLexicalState = YYINITIAL;
+    /**
+     * this buffer contains the current text to be matched and is
+     * the source of the yytext() string
+     */
+    private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
+    /**
+     * the textposition at the last accepting state
+     */
+    private int zzMarkedPos;
+    /**
+     * the current text position in the buffer
+     */
+    private int zzCurrentPos;
+    /**
+     * startRead marks the beginning of the yytext() string in the buffer
+     */
+    private int zzStartRead;
+    /**
+     * endRead marks the last character in the buffer, that has been read
+     * from input
+     */
+    private int zzEndRead;
+    /**
+     * number of newlines encountered up to the start of the matched text
+     */
+    private int yyline;
+    /**
+     * the number of characters up to the start of the matched text
+     */
+    private int yychar;
+    /**
+     * the number of characters from the last newline up to the start of the
+     * matched text
+     */
+    private int yycolumn;
+    /**
+     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
+     */
+    private boolean zzAtBOL = true;
+    /**
+     * zzAtEOF == true <=> the scanner is at the EOF
+     */
+    private boolean zzAtEOF;
+    /**
+     * denotes if the user-EOF-code has already been executed
+     */
+    private boolean zzEOFDone;
+    /**
+     * The number of occupied positions in zzBuffer beyond zzEndRead.
+     * When a lead/high surrogate has been read from the input stream
+     * into the final zzBuffer position, this will have a value of 1;
+     * otherwise, it will have a value of 0.
+     */
+    private int zzFinalHighSurrogate = 0;
+
+    /**
+     * Creates a new scanner
+     *
+     * @param in the java.io.Reader to read input from.
+     */
+    public CLexer(java.io.Reader in) {
+        this.zzReader = in;
+    }
+
+    private static int[] zzUnpackAction() {
+        int[] result = new int[253];
+        int offset = 0;
+        offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
+        return result;
+    }
+
+    private static int zzUnpackAction(String packed, int offset, int[] result) {
+        int i = 0;       /* index in packed string  */
+        int j = offset;  /* index in unpacked array */
+        int l = packed.length();
+        while (i < l) {
+            int count = packed.charAt(i++);
+            int value = packed.charAt(i++);
+            do result[j++] = value; while (--count > 0);
+        }
+        return j;
+    }
+
+    private static int[] zzUnpackRowMap() {
+        int[] result = new int[253];
+        int offset = 0;
+        offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
+        return result;
+    }
+
+    private static int zzUnpackRowMap(String packed, int offset, int[] result) {
+        int i = 0;  /* index in packed string  */
+        int j = offset;  /* index in unpacked array */
+        int l = packed.length();
+        while (i < l) {
+            int high = packed.charAt(i++) << 16;
+            result[j++] = high | packed.charAt(i++);
+        }
+        return j;
+    }
 
     private static int[] zzUnpackTrans() {
         int[] result = new int[15318];
@@ -625,41 +714,14 @@ public class CLexer {
         return j;
     }
 
-
-    /* error codes */
-    private static final int ZZ_UNKNOWN_ERROR = 0;
-    private static final int ZZ_NO_MATCH = 1;
-    private static final int ZZ_PUSHBACK_2BIG = 2;
-
-    /* error messages for the codes above */
-    private static final String ZZ_ERROR_MSG[] = {
-            "Unknown internal scanner error",
-            "Error: could not match input",
-            "Error: pushback value was too large"
-    };
-
-    /**
-     * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
-     */
-    private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
-
-    private static final String ZZ_ATTRIBUTE_PACKED_0 =
-            "\6\0\1\11\1\1\2\11\7\1\2\11\20\1\10\11" +
-                    "\2\1\1\11\5\1\2\11\1\1\2\11\1\1\1\11" +
-                    "\1\1\1\11\3\1\1\11\6\1\1\11\1\1\1\0" +
-                    "\2\1\1\11\1\0\3\1\1\11\1\1\10\0\30\1" +
-                    "\1\11\1\1\1\0\1\1\1\11\1\0\5\1\5\0" +
-                    "\1\1\4\0\32\1\1\11\1\0\3\1\10\0\22\1" +
-                    "\1\0\1\11\4\0\12\1\1\11\3\0\16\1\1\0" +
-                    "\2\1\1\0\2\1\1\0\2\1\1\0\2\1\1\0" +
-                    "\2\1\1\0\2\1\1\0\2\1\1\0\5\1";
-
     private static int[] zzUnpackAttribute() {
         int[] result = new int[253];
         int offset = 0;
         offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
         return result;
     }
+
+    /* user code: */
 
     private static int zzUnpackAttribute(String packed, int offset, int[] result) {
         int i = 0;       /* index in packed string  */
@@ -672,100 +734,6 @@ public class CLexer {
         }
         return j;
     }
-
-    /**
-     * the input device
-     */
-    private java.io.Reader zzReader;
-
-    /**
-     * the current state of the DFA
-     */
-    private int zzState;
-
-    /**
-     * the current lexical state
-     */
-    private int zzLexicalState = YYINITIAL;
-
-    /**
-     * this buffer contains the current text to be matched and is
-     * the source of the yytext() string
-     */
-    private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
-
-    /**
-     * the textposition at the last accepting state
-     */
-    private int zzMarkedPos;
-
-    /**
-     * the current text position in the buffer
-     */
-    private int zzCurrentPos;
-
-    /**
-     * startRead marks the beginning of the yytext() string in the buffer
-     */
-    private int zzStartRead;
-
-    /**
-     * endRead marks the last character in the buffer, that has been read
-     * from input
-     */
-    private int zzEndRead;
-
-    /**
-     * number of newlines encountered up to the start of the matched text
-     */
-    private int yyline;
-
-    /**
-     * the number of characters up to the start of the matched text
-     */
-    private int yychar;
-
-    /**
-     * the number of characters from the last newline up to the start of the
-     * matched text
-     */
-    private int yycolumn;
-
-    /**
-     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
-     */
-    private boolean zzAtBOL = true;
-
-    /**
-     * zzAtEOF == true <=> the scanner is at the EOF
-     */
-    private boolean zzAtEOF;
-
-    /**
-     * denotes if the user-EOF-code has already been executed
-     */
-    private boolean zzEOFDone;
-
-    /**
-     * The number of occupied positions in zzBuffer beyond zzEndRead.
-     * When a lead/high surrogate has been read from the input stream
-     * into the final zzBuffer position, this will have a value of 1;
-     * otherwise, it will have a value of 0.
-     */
-    private int zzFinalHighSurrogate = 0;
-
-    /* user code: */
-
-
-    /**
-     * Creates a new scanner
-     *
-     * @param in the java.io.Reader to read input from.
-     */
-    public CLexer(java.io.Reader in) {
-        this.zzReader = in;
-    }
-
 
     /**
      * Unpacks the compressed character translation table.

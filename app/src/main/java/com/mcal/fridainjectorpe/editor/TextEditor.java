@@ -8,10 +8,8 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 
-import com.mcal.fridainjectorpe.App;
 import com.mcal.fridainjectorpe.editor.common.OnKeyShortcutListener;
 import com.mcal.fridainjectorpe.editor.lang.Language;
-import com.mcal.fridainjectorpe.editor.lang.lua.LuaLanguage;
 import com.mcal.fridainjectorpe.editor.util.Document;
 import com.mcal.fridainjectorpe.editor.util.DocumentProvider;
 import com.mcal.fridainjectorpe.editor.util.Lexer;
@@ -26,6 +24,26 @@ public class TextEditor extends TextEditorField {
     private int mCaretIndex = 0;
     @SuppressLint("SdCardPath")
     private File fontDir = new File("/sdcard/android/fonts/");
+    private OnKeyShortcutListener mKeyShortcutListener = (keyCode, event) -> {
+        final int filteredMetaState = event.getMetaState() & ~KeyEvent.META_CTRL_MASK;
+        if (KeyEvent.metaStateHasNoModifiers(filteredMetaState)) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_A:
+                    selectAll();
+                    return true;
+                case KeyEvent.KEYCODE_X:
+                    cut();
+                    return true;
+                case KeyEvent.KEYCODE_C:
+                    copy();
+                    return true;
+                case KeyEvent.KEYCODE_V:
+                    paste();
+                    return true;
+            }
+        }
+        return false;
+    };
 
     public TextEditor(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -47,16 +65,10 @@ public class TextEditor extends TextEditorField {
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         @SuppressLint("WrongConstant") float size = TypedValue.applyDimension(2, BASE_TEXT_SIZE_PIXELS, dm);
         setTextSize((int) size);
-        setShowLineNumbers(true);
-        setHighlightCurrentRow(true);
         setTypeface(Typeface.MONOSPACE);
         //自动换行
-        setWordWrap(App.preferences.getBoolean("wordwrap", false));
-        setAutoIndentWidth(4);
-        setLanguage(LuaLanguage.getInstance());
         setNavigationMethod(new YoyoNavigationMethod(this));
     }
-
 
     public void initFont(File fontDir) {
         setTypeface(Typeface.MONOSPACE);
@@ -70,28 +82,6 @@ public class TextEditor extends TextEditorField {
         if (tf.exists())
             setItalicTypeface(Typeface.createFromFile(tf));
     }
-
-
-    private OnKeyShortcutListener mKeyShortcutListener = (keyCode, event) -> {
-        final int filteredMetaState = event.getMetaState() & ~KeyEvent.META_CTRL_MASK;
-        if (KeyEvent.metaStateHasNoModifiers(filteredMetaState)) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_A:
-                    selectAll();
-                    return true;
-                case KeyEvent.KEYCODE_X:
-                    cut();
-                    return true;
-                case KeyEvent.KEYCODE_C:
-                    copy();
-                    return true;
-                case KeyEvent.KEYCODE_V:
-                    paste();
-                    return true;
-            }
-        }
-        return false;
-    };
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
@@ -143,10 +133,6 @@ public class TextEditor extends TextEditorField {
         return createDocumentProvider();
     }
 
-    public String getString() {
-        return getText().toString();
-    }
-
     public void setText(CharSequence c) {
         //TextBuffer text = new TextBuffer();
         Document doc = new Document(this);
@@ -154,6 +140,10 @@ public class TextEditor extends TextEditorField {
         doc.setText(c);
         setDocumentProvider(new DocumentProvider(doc));
         //doc.analyzeWordWrap();
+    }
+
+    public String getString() {
+        return getText().toString();
     }
 
     public void setText(@NotNull CharSequence c, boolean isRep) {

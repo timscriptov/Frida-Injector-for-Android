@@ -2,6 +2,13 @@ package com.mcal.fridainjectorpe.editor.view;
 
 public class ColorSchemeLight extends ColorScheme {
 
+    private static final int OFF_WHITE = 0xFFFFFFFF;
+    private static final int OFF_BLACK = 0xFF333333;
+    private static final int GREEN_LIGHT = 0xFF009B00;
+    private static final int GREEN_DARK = 0xFF3F7F5F;
+    private static final int BLUE_LIGHT = 0xFF0F9CFF;
+    private static final int BLUE_DARK = 0xFF2C82C8;
+
     public ColorSchemeLight() {
         //文字
         setColor(Colorable.FOREGROUND, OFF_BLACK);
@@ -33,12 +40,4 @@ public class ColorSchemeLight extends ColorScheme {
         //注释
         setColor(Colorable.COMMENT, GREEN_LIGHT);
     }
-
-    private static final int OFF_WHITE = 0xFFFFFFFF;
-    private static final int OFF_BLACK = 0xFF333333;
-
-    private static final int GREEN_LIGHT = 0xFF009B00;
-    private static final int GREEN_DARK = 0xFF3F7F5F;
-    private static final int BLUE_LIGHT = 0xFF0F9CFF;
-    private static final int BLUE_DARK = 0xFF2C82C8;
 }

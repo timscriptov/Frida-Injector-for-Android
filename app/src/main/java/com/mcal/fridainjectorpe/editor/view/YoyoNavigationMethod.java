@@ -36,6 +36,11 @@ public class YoyoNavigationMethod extends TouchNavigationMethod
     private boolean isCaretHandleTouched = false;
     private boolean isShowYoyoCaret = true;
     private int mYoyoSize = 0;
+    private Runnable yoyoAnimation = () -> {
+        isShowYoyoCaret = false;
+        //mTextField.yoyoRemoveCallbacks(this);
+        //mTextField.invalidate();
+    };
 
     public YoyoNavigationMethod(FreeScrollingTextField textField) {
         super(textField);
@@ -180,7 +185,6 @@ public class YoyoNavigationMethod extends TouchNavigationMethod
         }
     }
 
-
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
 
@@ -242,7 +246,6 @@ public class YoyoNavigationMethod extends TouchNavigationMethod
         onDoubleTap(e);
     }
 
-
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         if (isCaretHandleTouched || isStartHandleTouched || isEndHandleTouched) {
@@ -252,13 +255,6 @@ public class YoyoNavigationMethod extends TouchNavigationMethod
             return super.onFling(e1, e2, velocityX, velocityY);
         }
     }
-
-
-    private Runnable yoyoAnimation = () -> {
-        isShowYoyoCaret = false;
-        //mTextField.yoyoRemoveCallbacks(this);
-        //mTextField.invalidate();
-    };
 
     public void yoyoDealyedHide() {
         mTextField.postDelayed(yoyoAnimation, 3000);
@@ -329,28 +325,23 @@ public class YoyoNavigationMethod extends TouchNavigationMethod
 
 
     private class Yoyo {
+        public final Rect HANDLE_BLOAT;
         private final int YOYO_STRING_RESTING_HEIGHT = mYoyoSize / 3;
         private final Rect HANDLE_RECT = new Rect(0, 0, mYoyoSize, mYoyoSize);
-        public final Rect HANDLE_BLOAT;
-
+        //		private final static int YOYO_HANDLE_ALPHA = 180;
+//		private final static int YOYO_HANDLE_COLOR = 0xFF0000FF;
+        private final Paint yoyoPaint;
         private Context context;
         //coordinates where the top of the yoyo string is attached
         private int anchorX = 0;
         private int anchorY = 0;
-
         //coordinates of the top-left corner of the yoyo handle
         private int handleX = 0;
         private int handleY = 0;
-
         //the offset where the handle is first touched,
         //(0,0) being the top-left of the handle
         private int xOffset = 0;
         private int yOffset = 0;
-
-        //		private final static int YOYO_HANDLE_ALPHA = 180;
-//		private final static int YOYO_HANDLE_COLOR = 0xFF0000FF;
-        private final Paint yoyoPaint;
-
         private boolean isYoyoShow = false;
 
         public Yoyo(Context context) {

@@ -4,8 +4,6 @@ import com.mcal.fridainjectorpe.editor.lang.Language;
 
 public class JavaLanguage extends Language {
 
-    private static JavaLanguage _theOne = null;
-
     private final static String[] keywords = {
             "void", "boolean", "byte", "char", "short", "int", "long", "float", "double", "strictfp",
             "import", "package", "new", "class", "interface", "extends", "implements", "enum",
@@ -15,7 +13,12 @@ public class JavaLanguage extends Language {
             "continue", "break", "return", "synchronized", "transient",
             "true", "false", "null"
     };
+    private static JavaLanguage _theOne = null;
 
+
+    private JavaLanguage() {
+        super.setKeywords(keywords);
+    }
 
     public static JavaLanguage getInstance() {
         if (_theOne == null) {
@@ -32,11 +35,6 @@ public class JavaLanguage extends Language {
     @Override
     public JavaFormatter getFormatter() {
         return JavaFormatter.getInstance();
-    }
-
-
-    private JavaLanguage() {
-        super.setKeywords(keywords);
     }
 
     /**
